@@ -16,6 +16,10 @@ Projeto de Engenharia de Software 2 - Grupo 4 - Universidade Federal Fluminense
 - [ZenHub](https://www.zenhub.com/)
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/) (opcional, mas recomendada)
 
+### Regras do Rummikub
+- [Wikipédia](https://pt.wikipedia.org/wiki/Rummikub)
+- [Grow](http://www.growgames.com.br/Content/Files/Grow_Rummikub_Regras.pdf)
+
 ### Informações adicionais
 - Metodologia [Scrum](https://www.desenvolvimentoagil.com.br/scrum/)
 - Duração da Sprint: 1 semana
