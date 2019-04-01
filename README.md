@@ -5,6 +5,7 @@ Projeto de Engenharia de Software 2 - Grupo 4 - Universidade Federal Fluminense
 - Breno Santos
 - Luciano Hanna
 - Patrick Pissurno
+- Vinicius Valle
 
 ### Tecnologias
 - [Java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
@@ -45,7 +46,7 @@ Projeto de Engenharia de Software 2 - Grupo 4 - Universidade Federal Fluminense
 ### Licença
 MIT License
 
-Copyright (c) 2019 Breno Santos, Luciano Hanna, Patrick Pissurno
+Copyright (c) 2019 Breno Santos, Luciano Hanna, Patrick Pissurno, Vinicius Valle
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
