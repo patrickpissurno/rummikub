@@ -30,12 +30,13 @@ Projeto de Engenharia de Software 2 - Grupo 4 - Universidade Federal Fluminense
 2. Instalar [Java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 3. Extensão do [ZenHub para Chrome](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd?hl=en-US) ou [Firefox](https://www.zenhub.com/extension)
 4. Pegar issue para resolver via [ZenHub](https://www.zenhub.com/) (não esquecendo de mover para In Progress)
-5. Notificar os demais membros da equipe via Telegram de quais arquivos você irá alterar (para facilitar resolução de conflitos de merge)
-6. Não dar push para a branch **master** (GitHub.com) enquanto seu código não estiver funcional (alternativa: criar uma branch ou fazer coisas pequenas e testáveis direto no master)
-7. Testar a funcionalidade básica antes de jogar para o master
-8. Caso qualquer bug surja, **escrever caso de teste que impeça que ele retorne** futuramente
-9. Ao final de uma feature, gerar build (.jar) e fazer upload para o [GitHub Releases](https://github.com/patrickpissurno/rummikub/releases)
-10. Fechar Issue e mover para Done no [ZenHub](https://www.zenhub.com/)
+5. Colocar comentário na issue para medir o tempo gasto (pode ser a duração diretamente ou a hora que começou, a hora que pausou e a hora que terminou de trabalhar na issue)
+6. Notificar os demais membros da equipe via Telegram de quais arquivos você irá alterar (para facilitar resolução de conflitos de merge)
+7. Não dar push para a branch **master** (GitHub.com) enquanto seu código não estiver funcional (alternativa: criar uma branch ou fazer coisas pequenas e testáveis direto no master)
+8. Testar a funcionalidade básica antes de jogar para o master
+9. Caso qualquer bug surja, **escrever caso de teste que impeça que ele retorne** futuramente
+10. Ao final de uma feature, gerar build (.jar) e fazer upload para o [GitHub Releases](https://github.com/patrickpissurno/rummikub/releases)
+11. Fechar Issue e mover para Done no [ZenHub](https://www.zenhub.com/)
 
 ### Requisitos de sistema
 - [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
