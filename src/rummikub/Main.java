@@ -1,8 +1,10 @@
+package rummikub;
+
 import javax.swing.*;
 import java.awt.*;
 
 /***
- * Classe responsável por inicializar o contexto gráfico e passar a referência para classe Game
+ * Classe responsável por inicializar o contexto gráfico e passar a referência para classe rummikub.Game
  */
 public class Main {
     public static void main(String args[]){
@@ -25,7 +27,7 @@ public class Main {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        //Passa a referência da janela para a classe Game
-        final Game game = new Game(panel);
+        //Passa a referência da janela para a classe rummikub.Game
+        final Game game = new rummikub.Game(panel);
     }
 }

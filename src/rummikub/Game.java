@@ -1,3 +1,5 @@
+package rummikub;
+
 import javax.swing.*;
 
 public class Game {
