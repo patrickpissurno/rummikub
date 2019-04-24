@@ -42,7 +42,7 @@ Projeto de Engenharia de Software 2 - Grupo 4 - Universidade Federal Fluminense
 - [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 
 ### Downloads
-- Em breve
+- [Clique aqui](https://github.com/patrickpissurno/rummikub/releases) para baixar a última versão.
 
 ### Licença
 MIT License
