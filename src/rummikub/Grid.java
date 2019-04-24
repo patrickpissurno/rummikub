@@ -1,29 +1,28 @@
 package rummikub;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Grid {
     private int cellSizeInPx;
-    private List<Pedra> mesa;
 
+    /**
+     * @param cellSizeInPx tamanho da célula em pixels
+     */
     public Grid(int cellSizeInPx){
         this.cellSizeInPx = cellSizeInPx;
-        this.mesa = new ArrayList<>();
     }
 
+
+    /**
+     * @return tamanho da célula em pixels
+     */
     public int getCellSizeInPx() {
         return cellSizeInPx;
     }
 
-    public List<Pedra> getMesa() {
-        return new ArrayList<>(this.mesa);
-    }
-
-    public void addPedra(Pedra pedra){
-        this.mesa.add(pedra);
-    }
-
+    /**
+     * transforma o valor de uma coordenada (x ou y) em um valor pertencente ao grid
+     * @param coordinate coordenada x ou y em pixels
+     * @return coordenada do grid
+     */
     public int snapCoordinateToGrid(float coordinate){
         return Math.round(coordinate / cellSizeInPx) * cellSizeInPx;
     }

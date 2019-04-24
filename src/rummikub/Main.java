@@ -26,6 +26,7 @@ public class Main {
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
+        frame.setBackground(new Color(0xCFC6B8)); //cor hexadecimal padrão, só adicionar 0x na frente
 
         //Passa a referência da janela para a classe rummikub.Game
         final Game game = new rummikub.Game(panel);

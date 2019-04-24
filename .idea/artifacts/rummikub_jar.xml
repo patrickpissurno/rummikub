@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="rummikub:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/rummikub_jar</output-path>
+    <root id="archive" name="rummikub.jar">
+      <element id="module-output" name="rummikub" />
+      <element id="directory" name="assets">
+        <element id="dir-copy" path="$PROJECT_DIR$/assets" />
+      </element>
+    </root>
+  </artifact>
+</component>
