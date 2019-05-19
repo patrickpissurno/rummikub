@@ -3,12 +3,17 @@ package rummikub;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Conjunto {
     private LinkedList<Pedra> pedras;
 
     public Conjunto(LinkedList<Pedra> pedras){
         this.pedras = pedras;
+    }
+
+    public Conjunto(List<Pedra> pedras){
+        this.pedras = new LinkedList<Pedra>(pedras);
     }
 
     public boolean isGrupo(){
@@ -65,5 +70,36 @@ public class Conjunto {
             return true;
 
         return false;
+    }
+
+    public ArrayList<Conjunto> split(Pedra pedraASerRemovida){
+        ArrayList<Conjunto> conjuntos = new ArrayList<>();
+        int i = pedras.indexOf(pedraASerRemovida);
+        conjuntos.add(new Conjunto(pedras.subList(0, i)));
+        conjuntos.add(new Conjunto(pedras.subList(i + 1, pedras.size())));
+
+        return conjuntos;
+    }
+
+    // RETORNA NULL caso não tenha split
+    public ArrayList<Conjunto> movePedra(Pedra pedra, Conjunto conjuntoDestino){
+        // caso de borda - não precisa de split
+        if (pedras.indexOf(pedra) == pedras.size() - 1 || pedras.indexOf(pedra) == 0) {
+            pedras.remove(pedra);
+            conjuntoDestino.add(pedra);
+            return null;
+        }
+        else {
+            conjuntoDestino.add(pedra);
+            return split(pedra);
+        }
+    }
+
+    public void add(Pedra pedra){
+        pedras.add(pedra);
+    }
+
+    public int size(){
+        return pedras.size();
     }
 }
