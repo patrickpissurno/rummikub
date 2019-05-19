@@ -82,4 +82,12 @@ public class Pedra implements GameObject {
     public void moveTo(Grid grid, int x, int y){
         spriteHolder.setLocation(grid.snapCoordinateToGrid(x), grid.snapCoordinateToGrid(y));
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getCor() {
+        return cor;
+    }
 }
