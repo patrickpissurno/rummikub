@@ -56,7 +56,7 @@ public class Pedra implements GameObject {
         else
             frenteSprite = new ImageIcon(Utils.getResource("assets/" + cor + "/" + tipo + ".png"));
 
-        spriteHolder =  new JLabel(frenteSprite);
+        spriteHolder =  new JLabel(versoSprite);
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, versoSprite.getIconWidth(), versoSprite.getIconHeight());
 
@@ -89,5 +89,9 @@ public class Pedra implements GameObject {
 
     public String getCor() {
         return cor;
+    }
+
+    public void desvirar(){
+        this.spriteHolder.setIcon(frenteSprite);
     }
 }

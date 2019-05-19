@@ -11,10 +11,13 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(() -> init());
     }
 
+    public static final int WINDOW_WIDTH = 1280;
+    public static final int WINDOW_HEIGHT = 790;
+
     private static void init(){
         //Inicializa a interface gráfica
         final JFrame frame = new JFrame("Rummikub");
-        frame.setMinimumSize(new Dimension(1280, 720));
+        frame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JLayeredPane panel = new JLayeredPane();
