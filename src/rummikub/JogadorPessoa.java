@@ -1,12 +1,14 @@
 package rummikub;
 
+import rummikub.interfaces.Jogador;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Jogador {
+public class JogadorPessoa implements Jogador {
     private List<Pedra> pedras;
 
-    public Jogador(){
+    public JogadorPessoa(){
         this.pedras = new ArrayList<>();
     }
 
