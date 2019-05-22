@@ -51,7 +51,7 @@ public class Conjunto {
         int nCoringas = 0;
 
         for(int i = 0; i < pedras.size(); i++) {
-            // verifica se tem alguma pedra de numero diferente
+            // verifica se tem alguma pedra de cor diferente
             if (!pedras.get(i).getTipo().equals(Pedra.TIPO_CORINGA) && !pedras.get(i).getCor().equals(corDoGrupo))
                 return false;
 
@@ -97,6 +97,33 @@ public class Conjunto {
 
     public void add(Pedra pedra){
         pedras.add(pedra);
+    }
+
+    // usado para contagem de pontos da jogada inicial
+    public int getPontos() {
+        if (isGrupo()){
+            // valor das pedras do grupo * quantidade de pedras
+            for (int i = 0; i < pedras.size(); i++)
+                if (!pedras.get(i).getTipo().equals(Pedra.TIPO_CORINGA))
+                    return Integer.parseInt(pedras.get(i).getTipo()) * pedras.size();
+        }
+        else if (isSequencia()){
+            int primeiroValor = 0;
+            int ultimoValor = 0;
+
+            // e.g. pedras[0] = coringa e pedras[1] = 2, a primeira pedra é 1
+            for (int i = 0; i < pedras.size(); i++)
+                if (!pedras.get(i).getTipo().equals(Pedra.TIPO_CORINGA))
+                    primeiroValor = Integer.parseInt(pedras.get(i).getTipo()) - i;
+
+            // e.g. pedras[n] = coringa e pedras[n-1] = 2, a ultima pedra é 3
+            for (int i = pedras.size() - 1; i >= 0; i--)
+                if (!pedras.get(i).getTipo().equals(Pedra.TIPO_CORINGA))
+                    ultimoValor = Integer.parseInt(pedras.get(i).getTipo()) + (pedras.size() - i);
+
+            return ((primeiroValor + ultimoValor) * pedras.size())/2;
+        }
+        return 0;
     }
 
     public int size(){

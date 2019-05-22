@@ -8,6 +8,8 @@ import java.util.List;
 public class JogadorCPU implements Jogador {
     private List<Pedra> pedras;
 
+    private List<Conjunto> conjuntosJogada;
+
     public JogadorCPU(){
         pedras = new ArrayList<>();
     }
@@ -25,5 +27,15 @@ public class JogadorCPU implements Jogador {
     @Override
     public List<Pedra> getPedras() {
         return pedras;
+    }
+
+    @Override
+    public ArrayList<Conjunto> getConjuntosJogada() {
+        return new ArrayList<Conjunto>(conjuntosJogada);
+    }
+
+    @Override
+    public void fimJogada() {
+        conjuntosJogada.clear();
     }
 }

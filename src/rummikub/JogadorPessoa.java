@@ -3,13 +3,17 @@ package rummikub;
 import rummikub.interfaces.Jogador;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class JogadorPessoa implements Jogador {
     private List<Pedra> pedras;
 
+    private List<Conjunto> conjuntosJogada;
+
     public JogadorPessoa(){
         this.pedras = new ArrayList<>();
+        this.conjuntosJogada = new ArrayList<>();
     }
 
     public void comprarPedra(Pedra pedra, Grid grid){
@@ -25,5 +29,15 @@ public class JogadorPessoa implements Jogador {
 
     public List<Pedra> getPedras(){
         return new ArrayList<>(pedras);
+    }
+
+    @Override
+    public ArrayList<Conjunto> getConjuntosJogada() {
+        return new ArrayList<Conjunto>(conjuntosJogada);
+    }
+
+    @Override
+    public void fimJogada() {
+        conjuntosJogada.clear();
     }
 }

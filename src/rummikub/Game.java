@@ -3,10 +3,7 @@ package rummikub;
 import rummikub.interfaces.Jogador;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Game {
     private JLayeredPane panel;
@@ -73,6 +70,22 @@ public class Game {
             turno = jogador;
         else
             turno = cpu;
+    }
+
+    //contagem de pontos dos conjuntos da jogada inicial
+    private int pontuaJogadaInicial(){
+        int pontos = 0;
+        List<Conjunto> conjuntos = turno.getConjuntosJogada();
+
+        for (Conjunto conjunto : conjuntos)
+            pontos += conjunto.getPontos();
+
+        return pontos;
+    }
+
+    //true se jogada inicial é válida
+    private boolean validaJogadaInicial() {
+        return pontuaJogadaInicial() >= 30;
     }
 
     public Pedra novaPedra(Pedra pedra){
