@@ -6,6 +6,7 @@ Projeto de Engenharia de Software 2 - Grupo 4 - Universidade Federal Fluminense
 - Luciano Hanna
 - Patrick Pissurno
 - Vinicius Valle
+- João Pedro Alvim
 
 ### Tecnologias
 - [Java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
