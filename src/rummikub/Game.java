@@ -9,7 +9,7 @@ public class Game {
     private JLayeredPane panel;
     private Grid grid;
 
-    private List<Pedra> mesa;
+    private List<Conjunto> mesa;
     private Stack<Pedra> monteDeCompras;
 
     private Jogador jogador;
@@ -81,6 +81,15 @@ public class Game {
             pontos += conjunto.getPontos();
 
         return pontos;
+    }
+
+    /**
+     * deve ser chamado no final de cada jogada validada
+     * seta todos os conjuntos da mesa como não novo
+     */
+    private void afterJogada() {
+        for (Conjunto conjunto : mesa)
+            conjunto.setOld();
     }
 
     //true se jogada inicial é válida

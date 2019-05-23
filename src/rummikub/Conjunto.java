@@ -7,12 +7,15 @@ import java.util.List;
 
 public class Conjunto {
     private LinkedList<Pedra> pedras;
+    private boolean isNew;
 
     public Conjunto(LinkedList<Pedra> pedras){
+        isNew = true;
         this.pedras = pedras;
     }
 
     public Conjunto(List<Pedra> pedras){
+        isNew = true;
         this.pedras = new LinkedList<Pedra>(pedras);
     }
 
@@ -128,5 +131,17 @@ public class Conjunto {
 
     public int size(){
         return pedras.size();
+    }
+
+    /**
+     * verifica se pode realizar o drag na jogada inicial
+     * @return boolean indicando se é possivel realizar o drag
+     */
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setOld() {
+        isNew = false;
     }
 }
