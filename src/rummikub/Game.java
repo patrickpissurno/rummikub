@@ -1,11 +1,16 @@
 package rummikub;
 
+import rummikub.interfaces.CollisionChecker;
 import rummikub.interfaces.Jogador;
 
 import javax.swing.*;
-import java.util.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
 
-public class Game {
+public class Game implements CollisionChecker {
     private JLayeredPane panel;
     private Grid grid;
 
@@ -17,8 +22,14 @@ public class Game {
 
     private Jogador turno;
 
-    public Game(JLayeredPane panel){
+    private FrameWrapper frameWrapper;
+    private LayeredPaneWrapper paneWrapper;
+
+    public Game(JLayeredPane panel, FrameWrapper frameWrapper){
+        this.frameWrapper = frameWrapper;
         this.panel = panel;
+        this.paneWrapper = new LayeredPaneWrapper(panel);
+
         this.mesa = new ArrayList<>();
         this.monteDeCompras = new Stack<>();
 
@@ -98,11 +109,29 @@ public class Game {
     }
 
     public Pedra novaPedra(Pedra pedra){
-        final JLabel sprite = pedra.onCreate(grid);
+        final JLabel sprite = pedra.onCreate(grid, frameWrapper, paneWrapper, this);
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
 
         return pedra;
+    }
+
+    //documentação na interface CollisionChecker
+    @Override
+    public boolean checkCollision(JLabel me) {
+        final Point a = me.getLocation();
+        int size = grid.getCellSizeInPx();
+
+        for(Component c : panel.getComponentsInLayer(JLayeredPane.DEFAULT_LAYER)){
+            if(c.equals(me))
+                continue;
+
+            final Point b = c.getLocation();
+
+            if(a.x < b.x + size && a.x + size > b.x && a.y < b.y + size && a.y + size > b.y)
+                return true;
+        }
+        return false;
     }
 }

@@ -3,6 +3,7 @@ package test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import rummikub.FrameWrapper;
 import rummikub.Game;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ class GameTest {
      */
     @BeforeEach
     void setUp() {
-        game = new Game(new JLayeredPane());
+        game = new Game(new JLayeredPane(), new FrameWrapper(null));
     }
 
     /*

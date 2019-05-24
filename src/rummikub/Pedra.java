@@ -1,8 +1,15 @@
 package rummikub;
 
+import rummikub.interfaces.CollisionChecker;
 import rummikub.interfaces.GameObject;
+import rummikub.interfaces.MoveToFront;
+import rummikub.interfaces.WindowLocation;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class Pedra implements GameObject {
     public static final String TIPO_NUMERO_1 = "1";
@@ -37,6 +44,8 @@ public class Pedra implements GameObject {
     private String tipo;
     private String cor;
 
+    private Point locationBeforeDrag;
+
     public Pedra(String tipo, String cor){
         this.tipo = tipo;
         this.cor = cor;
@@ -46,7 +55,7 @@ public class Pedra implements GameObject {
     }
 
     @Override
-    public JLabel onCreate(Grid grid) {
+    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
         versoSprite = new ImageIcon(Utils.getResource("assets/pedra_verso.png"));
 
         if(tipo.equals(TIPO_CORINGA)) {
@@ -60,16 +69,18 @@ public class Pedra implements GameObject {
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, versoSprite.getIconWidth(), versoSprite.getIconHeight());
 
+        setupMouseEvents(grid, loc, mov, col);
+
         return spriteHolder;
     }
 
     @Override
-    public void onUpdate(Grid grid) {
+    public void onUpdate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
 
     }
 
     @Override
-    public void onDestroy(Grid grid) {
+    public void onDestroy(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
 
     }
 
@@ -80,7 +91,16 @@ public class Pedra implements GameObject {
      * @param y coordenada Y de destino
      */
     public void moveTo(Grid grid, int x, int y){
-        spriteHolder.setLocation(grid.snapCoordinateToGrid(x), grid.snapCoordinateToGrid(y));
+        moveToNoSnapping(grid.snapCoordinateToGrid(x), grid.snapCoordinateToGrid(y));
+    }
+
+    /**
+     * Move a pedra de sua posição atual para as coordenadas de destino sem respeitar o grid
+     * @param x coordenada X de destino
+     * @param y coordenada Y de destino
+     */
+    private void moveToNoSnapping(int x, int y){
+        spriteHolder.setLocation(x, y);
     }
 
     public String getTipo() {
@@ -93,5 +113,43 @@ public class Pedra implements GameObject {
 
     public void desvirar(){
         this.spriteHolder.setIcon(frenteSprite);
+    }
+
+    private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col){
+        spriteHolder.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+
+                mov.moveToFront(spriteHolder);
+
+                locationBeforeDrag = spriteHolder.getLocation();
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mousePressed(e);
+
+                final Point position = spriteHolder.getLocation();
+                moveTo(grid, position.x, position.y);
+
+                if(col.checkCollision(spriteHolder)){
+                    moveTo(grid, locationBeforeDrag.x, locationBeforeDrag.y);
+                    locationBeforeDrag = null;
+                }
+            }
+        });
+
+        spriteHolder.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+
+                final Point absoluteMouse = MouseInfo.getPointerInfo().getLocation();
+                final Point windowLocation = loc.getLocation();
+                final Point mouse = Utils.screenCoordinatesToWindowCoordinates(windowLocation, absoluteMouse);
+
+                moveToNoSnapping(mouse.x - grid.getCellSizeInPx() / 2, mouse.y - grid.getCellSizeInPx() / 2);
+            }
+        });
     }
 }
