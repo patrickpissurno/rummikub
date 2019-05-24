@@ -1,5 +1,6 @@
 package rummikub;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -31,5 +32,9 @@ public class Utils {
         {
             return null;
         }
+    }
+
+    public static Point screenCoordinatesToWindowCoordinates(Point windowLocation, Point point){
+        return new Point(point.x - windowLocation.x, point.y - windowLocation.y);
     }
 }
