@@ -1,13 +1,10 @@
 package rummikub;
 
-import rummikub.interfaces.Jogador;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class JogadorPessoa implements Jogador {
-    private List<Pedra> pedras;
+public class JogadorPessoa extends Jogador {
+//    private List<Pedra> pedras;
 
     private List<Conjunto> conjuntosJogada;
 
@@ -39,5 +36,10 @@ public class JogadorPessoa implements Jogador {
     @Override
     public void fimJogada() {
         conjuntosJogada.clear();
+    }
+
+    @Override
+    public int getSomatorioMao() {
+        return super.getSomatorioMao();
     }
 }

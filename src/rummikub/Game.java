@@ -1,7 +1,6 @@
 package rummikub;
 
 import rummikub.interfaces.CollisionChecker;
-import rummikub.interfaces.Jogador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,5 +132,35 @@ public class Game implements CollisionChecker {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * calcula a pontuação do vencedor
+     * score do vencedor é o somatório da mão dos perdedores
+     * @param vencedor player que apertou o botão "rummikub"
+     * @param adversarios lista de jogadores excluindo o vencedor
+     * @return coordenada do grid
+     */
+    private int getPontuacaoVencedor(Jogador vencedor, List<Jogador> adversarios) {
+        int score = 0;
+        for (Jogador adversario : adversarios)
+            score += adversario.getSomatorioMao();
+
+        return score;
+    }
+
+    /**
+     * calcula a pontuação de um dos perdedores
+     * score do perdedor é o módulo negativo do somatorio de sua mão descontado do somatorio da mão do vencedor
+     * engloba a vitória padrão e vitória alternativa pois o somatório do vencedor é 0 na vitória padrão
+     * @param vencedor player que apertou o botão "rummikub"/
+     * @param perdedor lista de jogadores excluindo o vencedor
+     * @return coordenada do grid
+     */
+    private int getPontuacaoPerdedor(Jogador vencedor, Jogador perdedor) {
+        int score;
+        score = perdedor.getSomatorioMao() - vencedor.getSomatorioMao();
+
+        return -1 * score;
     }
 }
