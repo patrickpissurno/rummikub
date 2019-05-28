@@ -136,15 +136,28 @@ public class Game implements CollisionChecker {
 
     /**
      * calcula a pontuação do vencedor
-     * score do vencedor é o somatório da mão dos perdedores
+     * score do vencedor é o módulo positivo do somatório das pontuações dos perdedores
+     * @param vencedor player que apertou o botão "rummikub"
+     * @param adversario único jogador adversário
+     * @return coordenada do grid
+     */
+    public int getPontuacaoVencedor(Jogador vencedor, Jogador adversario) {
+        List<Jogador> adversarios = new ArrayList<Jogador>();
+        adversarios.add(adversario);
+        return getPontuacaoVencedor(vencedor, adversarios);
+    }
+
+    /**
+     * calcula a pontuação do vencedor
+     * score do vencedor é o módulo positivo do somatório das pontuações dos perdedores
      * @param vencedor player que apertou o botão "rummikub"
      * @param adversarios lista de jogadores excluindo o vencedor
      * @return coordenada do grid
      */
-    private int getPontuacaoVencedor(Jogador vencedor, List<Jogador> adversarios) {
+    public int getPontuacaoVencedor(Jogador vencedor, List<Jogador> adversarios) {
         int score = 0;
         for (Jogador adversario : adversarios)
-            score += adversario.getSomatorioMao();
+            score += -1 * getPontuacaoPerdedor(vencedor, adversario);
 
         return score;
     }
@@ -157,10 +170,28 @@ public class Game implements CollisionChecker {
      * @param perdedor lista de jogadores excluindo o vencedor
      * @return coordenada do grid
      */
-    private int getPontuacaoPerdedor(Jogador vencedor, Jogador perdedor) {
+    public int getPontuacaoPerdedor(Jogador vencedor, Jogador perdedor) {
         int score;
         score = perdedor.getSomatorioMao() - vencedor.getSomatorioMao();
 
         return -1 * score;
     }
+
+    public Jogador getVencedorVitoriaAlternativa(List<Jogador> jogadores) {
+        Jogador vencedor = jogadores.get(0);
+
+        for (Jogador jogador : jogadores)
+            if (jogador.getSomatorioMao() < vencedor.getSomatorioMao())
+                vencedor = jogador;
+        return vencedor;
+    }
+
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
+
 }

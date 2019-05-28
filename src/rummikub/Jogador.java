@@ -5,10 +5,18 @@ import java.util.List;
 public abstract class Jogador {
     protected List<Pedra> pedras;
 
-    abstract void comprarPedra(Pedra pedra, Grid grid);
-    abstract List<Pedra> getPedras();
+    public abstract void comprarPedra(Pedra pedra, Grid grid);
+    public abstract List<Pedra> getPedras();
     abstract List<Conjunto> getConjuntosJogada();
     abstract void fimJogada();
+
+    public void clearPedras() {
+        pedras.clear();
+    }
+
+    public void addPedra(Pedra pedra) {
+        pedras.add(pedra);
+    }
 
     public int getSomatorioMao(){
         int somatorio = 0;
