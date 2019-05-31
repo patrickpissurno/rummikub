@@ -1,9 +1,18 @@
 package rummikub;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Jogador {
     protected List<Pedra> pedras;
+    protected List<Integer> pontuacaoPartidas;
+    protected List<Conjunto> conjuntosJogada;
+
+    public Jogador(){
+        this.pontuacaoPartidas = new ArrayList<Integer>();
+        this.pedras = new ArrayList<>();
+        this.conjuntosJogada = new ArrayList<>();
+    }
 
     public abstract void comprarPedra(Pedra pedra, Grid grid);
     public abstract List<Pedra> getPedras();
@@ -29,4 +38,23 @@ public abstract class Jogador {
         return somatorio;
     }
 
+    public void addPontuacaoPartida(int pontuacao) {
+        pontuacaoPartidas.add(pontuacao);
+    }
+
+    public List<Integer> getPontuacoesPartidas() {
+        return pontuacaoPartidas;
+    }
+
+    public int getPontuacaoPartida(int index) {
+        return pontuacaoPartidas.get(index);
+    }
+
+    public int getSomaPontuacaoPartida() {
+        int soma = 0;
+        for (Integer pontuacaoPartida : pontuacaoPartidas)
+            soma += pontuacaoPartida;
+
+        return soma;
+    }
 }

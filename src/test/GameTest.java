@@ -7,6 +7,9 @@ import rummikub.*;
 
 import javax.swing.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -98,5 +101,27 @@ class GameTest {
         assertEquals(-29, game.getPontuacaoPerdedor(vencedor, adversario));
     }
 
+    @Test
+    void pontuacoesPartidas() {
+        Jogador jogador1 = new JogadorPessoa();
+        Jogador jogador2 = new JogadorPessoa();
 
+        jogador1.addPontuacaoPartida(10);
+        jogador1.addPontuacaoPartida(30);
+        jogador1.addPontuacaoPartida(50);
+        //soma = 90
+
+        jogador2.addPontuacaoPartida(-10);
+        jogador2.addPontuacaoPartida(-30);
+        jogador2.addPontuacaoPartida(-50);
+        //soma = -90
+
+        List<Jogador> jogadores = new ArrayList<>();
+        jogadores.add(jogador1);
+        jogadores.add(jogador2);
+
+        assertEquals(jogador1, game.getVencedorJogo(jogadores));
+        assertEquals(90, jogador1.getSomaPontuacaoPartida());
+        assertEquals(-90, jogador2.getSomaPontuacaoPartida());
+    }
 }

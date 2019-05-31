@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JogadorPessoa extends Jogador {
-//    private List<Pedra> pedras;
-
-    private List<Conjunto> conjuntosJogada;
 
     public JogadorPessoa(){
-        this.pedras = new ArrayList<>();
-        this.conjuntosJogada = new ArrayList<>();
+        super();
     }
 
     public void comprarPedra(Pedra pedra, Grid grid){

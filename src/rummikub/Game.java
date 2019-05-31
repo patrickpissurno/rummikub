@@ -82,6 +82,26 @@ public class Game implements CollisionChecker {
             turno = cpu;
     }
 
+    /**
+     * deve ser chamada após a validação de final de partida
+     *
+     */
+    private void finalizaPartida() {
+        // vitoria alternativa || vitoria padrão
+        if (jogador == getVencedorVitoriaAlternativa(jogador, cpu) || jogador.getPedras().size() == 0) {
+
+            jogador.addPontuacaoPartida(getPontuacaoVencedor(jogador, cpu));
+            cpu.addPontuacaoPartida(getPontuacaoPerdedor(jogador, cpu));
+
+        } else if (cpu == getVencedorVitoriaAlternativa(jogador, cpu) || cpu.getPedras().size() == 0){
+
+            cpu.addPontuacaoPartida(getPontuacaoVencedor(cpu, jogador));
+            jogador.addPontuacaoPartida(getPontuacaoPerdedor(cpu, jogador));
+
+        }
+
+    }
+
     //contagem de pontos dos conjuntos da jogada inicial
     private int pontuaJogadaInicial(){
         int pontos = 0;
@@ -183,6 +203,29 @@ public class Game implements CollisionChecker {
         for (Jogador jogador : jogadores)
             if (jogador.getSomatorioMao() < vencedor.getSomatorioMao())
                 vencedor = jogador;
+        return vencedor;
+    }
+
+    public Jogador getVencedorVitoriaAlternativa(Jogador cpu, Jogador pessoa) {
+        List<Jogador> jogadores = new ArrayList<>();
+        jogadores.add(cpu);
+        jogadores.add(pessoa);
+        return getVencedorVitoriaAlternativa(jogadores);
+    }
+
+    /**
+     * apura quem foi o vencedor da serie de partidas
+     * @param jogadores lista de jogadores do jogo
+     * @return Jogador vencedor do JOGO
+     */
+    public Jogador getVencedorJogo(List<Jogador> jogadores) {
+        Jogador vencedor = null;
+
+        for (Jogador jogador : jogadores) {
+            if (vencedor == null || jogador.getSomaPontuacaoPartida() > vencedor.getSomaPontuacaoPartida())
+                vencedor = jogador;
+        }
+
         return vencedor;
     }
 

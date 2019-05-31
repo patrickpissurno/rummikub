@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JogadorCPU extends Jogador {
-    private List<Conjunto> conjuntosJogada;
 
     public JogadorCPU(){
-        pedras = new ArrayList<>();
+        super();
     }
 
     @Override
