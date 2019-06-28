@@ -16,6 +16,8 @@ public class Game implements CollisionChecker {
     private List<Conjunto> mesa;
     private Stack<Pedra> monteDeCompras;
 
+    private Botao botaoPassarVez;
+
     private Jogador jogador;
     private Jogador cpu;
 
@@ -37,9 +39,48 @@ public class Game implements CollisionChecker {
         this.jogador = new JogadorPessoa();
         this.cpu = new JogadorCPU();
 
+        inicializaBotoes();
+
         inicializaMonteDeCompras();
 
         inicializaPartida();
+    }
+
+    private void inicializaBotoes() {
+        botaoPassarVez = novoBotao(new Botao(Botao.TIPO_PASSAR_A_VEZ, this));
+        botaoPassarVez.moveTo(panel.getWidth() - 8 - botaoPassarVez.getWidth(), panel.getHeight() - 64 - botaoPassarVez.getHeight());
+    }
+
+    private Botao novoBotao(Botao botao) {
+        final JLabel sprite = botao.onCreate(grid, frameWrapper, paneWrapper, this);
+
+        //Adiciona o sprite ao frame para que seja renderizado na tela
+        panel.add(sprite, new Integer(panel.getComponentCount() + 1));
+
+        return botao;
+    }
+
+    public void jogadorAtualCompraPedra() {
+        turno.comprarPedra(monteDeCompras.pop(), grid);
+    }
+
+    public void passaVez() {
+        if(turno == jogador) {
+            turno = cpu;
+            disableButtons();
+        }
+        else if (turno == cpu) {
+            turno = jogador;
+            enableButtons();
+        }
+    }
+
+    private void enableButtons() {
+        botaoPassarVez.setEnabled();
+    }
+
+    private void disableButtons() {
+        botaoPassarVez.setDisabled();
     }
 
     private void inicializaMonteDeCompras(){
@@ -76,8 +117,10 @@ public class Game implements CollisionChecker {
         }
 
         //um jogador é escolhido aleatoriamente para começar
-        if(Utils.randomRange(0, 1) == 0)
+        if(Utils.randomRange(0, 1) == 0) {
             turno = jogador;
+            enableButtons();
+        }
         else
             turno = cpu;
     }
