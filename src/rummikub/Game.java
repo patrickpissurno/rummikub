@@ -17,6 +17,7 @@ public class Game implements CollisionChecker {
     private Stack<Pedra> monteDeCompras;
 
     private Botao botaoPassarVez;
+    private Botao botaoRummikub;
 
     private Jogador jogador;
     private Jogador cpu;
@@ -48,7 +49,12 @@ public class Game implements CollisionChecker {
 
     private void inicializaBotoes() {
         botaoPassarVez = novoBotao(new Botao(Botao.TIPO_PASSAR_A_VEZ, this));
-        botaoPassarVez.moveTo(panel.getWidth() - 8 - botaoPassarVez.getWidth(), panel.getHeight() - 64 - botaoPassarVez.getHeight());
+        int botaoPassarVezY = panel.getHeight() - 64 - botaoPassarVez.getHeight();
+        botaoPassarVez.moveTo(panel.getWidth() - 8 - botaoPassarVez.getWidth(), botaoPassarVezY);
+
+        botaoRummikub = novoBotao(new Botao(Botao.TIPO_RUMMIKUB, this));
+        int botaoRummikubY = botaoPassarVezY - 8 - botaoRummikub.getHeight();
+        botaoRummikub.moveTo(panel.getWidth() - 8 - botaoRummikub.getWidth(), botaoRummikubY);
     }
 
     private Botao novoBotao(Botao botao) {
@@ -61,10 +67,24 @@ public class Game implements CollisionChecker {
     }
 
     public void jogadorAtualCompraPedra() {
-        turno.comprarPedra(monteDeCompras.pop(), grid);
+        if (monteDeCompras.empty())
+            finalizaPartida();
+        else {
+            turno.comprarPedra(monteDeCompras.pop(), grid);
+            passaVez();
+        }
     }
 
-    public void passaVez() {
+    /*
+     * verifica se o jogador pode "falar" rummikub
+     */
+
+    public void checkRummikub() {
+        if (turno.getPedras().isEmpty())
+            finalizaPartida();
+    }
+
+    private void passaVez() {
         if(turno == jogador) {
             turno = cpu;
             disableButtons();
@@ -77,6 +97,7 @@ public class Game implements CollisionChecker {
 
     private void enableButtons() {
         botaoPassarVez.setEnabled();
+        botaoRummikub.setEnabled();
     }
 
     private void disableButtons() {

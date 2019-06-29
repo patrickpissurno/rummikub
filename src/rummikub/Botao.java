@@ -23,6 +23,7 @@ public class Botao implements GameObject {
     private boolean isEnabled;
 
     public static final String TIPO_PASSAR_A_VEZ = "passar_vez";
+    public static final String TIPO_RUMMIKUB = "rummikub";
 
     public Botao(String tipo, Game game) {
         this.tipo = tipo;
@@ -35,6 +36,11 @@ public class Botao implements GameObject {
             disabledButton = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez_disabled.png"));
             downButton = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez_down.png"));
             button = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez.png"));
+        }
+        else if (tipo.equals(TIPO_RUMMIKUB)) {
+            disabledButton = new ImageIcon(Utils.getResource("assets/buttons/btn_rummikub/btn_rummikub_disabled.png"));
+            downButton = new ImageIcon(Utils.getResource("assets/buttons/btn_rummikub/btn_rummikub_down.png"));
+            button = new ImageIcon(Utils.getResource("assets/buttons/btn_rummikub/btn_rummikub.png"));
         }
 
         spriteHolder = new JLabel(disabledButton);
@@ -79,23 +85,43 @@ public class Botao implements GameObject {
     }
 
     private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
-        spriteHolder.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                if (isEnabled)
-                    spriteHolder.setIcon(downButton);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                if (isEnabled) {
-                    spriteHolder.setIcon(button);
-                    game.jogadorAtualCompraPedra();
-                    game.passaVez();
+        if (tipo.equals(TIPO_PASSAR_A_VEZ)) {
+            spriteHolder.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    super.mousePressed(e);
+                    if (isEnabled)
+                        spriteHolder.setIcon(downButton);
                 }
-            }
-        });
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    super.mouseReleased(e);
+                    if (isEnabled) {
+                        spriteHolder.setIcon(button);
+                        game.jogadorAtualCompraPedra();
+                    }
+                }
+            });
+        }
+        else if (tipo.equals(TIPO_RUMMIKUB)) {
+            spriteHolder.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    super.mousePressed(e);
+                    if (isEnabled)
+                        spriteHolder.setIcon(downButton);
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    super.mouseReleased(e);
+                    if (isEnabled) {
+                        spriteHolder.setIcon(button);
+                        game.checkRummikub();
+                    }
+                }
+            });
+        }
     }
 }
