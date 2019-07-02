@@ -11,7 +11,7 @@ public abstract class Jogador {
     protected List<Conjunto> conjuntosJogada;
 
     public Jogador(){
-        this.pontuacaoPartidas = new ArrayList<Integer>();
+        this.pontuacaoPartidas = new ArrayList<>();
         this.pedras = new ArrayList<>();
         this.conjuntosJogada = new ArrayList<>();
     }

@@ -28,7 +28,7 @@ public class JogadorPessoa extends Jogador {
 
     @Override
     public ArrayList<Conjunto> getConjuntosJogada() {
-        return new ArrayList<Conjunto>(conjuntosJogada);
+        return new ArrayList<>(conjuntosJogada);
     }
 
     @Override

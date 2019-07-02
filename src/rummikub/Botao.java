@@ -20,6 +20,7 @@ public class Botao implements GameObject {
 
     public static final String TIPO_PASSAR_A_VEZ = "passar_vez";
     public static final String TIPO_RUMMIKUB = "rummikub";
+    public static final String TIPO_FINALIZAR_JOGADA = "finalizar_jogada";
 
     private Runnable clickListener;
 
@@ -38,6 +39,11 @@ public class Botao implements GameObject {
             disabledButton = new ImageIcon(Utils.getResource("assets/buttons/btn_rummikub/btn_rummikub_disabled.png"));
             downButton = new ImageIcon(Utils.getResource("assets/buttons/btn_rummikub/btn_rummikub_down.png"));
             button = new ImageIcon(Utils.getResource("assets/buttons/btn_rummikub/btn_rummikub.png"));
+        }
+        else if (tipo.equals(TIPO_FINALIZAR_JOGADA)) {
+            disabledButton = new ImageIcon(Utils.getResource("assets/buttons/btn_finalizar_jogada/btn_finalizar_jogada_disabled.png"));
+            downButton = new ImageIcon(Utils.getResource("assets/buttons/btn_finalizar_jogada/btn_finalizar_jogada_down.png"));
+            button = new ImageIcon(Utils.getResource("assets/buttons/btn_finalizar_jogada/btn_finalizar_jogada.png"));
         }
 
         spriteHolder = new JLabel(disabledButton);

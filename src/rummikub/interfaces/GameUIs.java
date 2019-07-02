@@ -7,4 +7,5 @@ package rummikub.interfaces;
 public interface GameUIs {
     void passarAVezButtonPressed();
     void rummikubButtonPressed();
+    void finalizarJogadaButtonPressed();
 }

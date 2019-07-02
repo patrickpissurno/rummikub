@@ -15,20 +15,26 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private JLayeredPane panel;
     private Grid grid;
 
+    private FrameWrapper frameWrapper;
+    private LayeredPaneWrapper paneWrapper;
+
+    private Botao botaoPassarVez;
+    private Botao botaoRummikub;
+    private Botao botaoFinalizarJogada;
+
     private List<Pedra> todasAsPedras;
     private List<Conjunto> mesa;
     private Stack<Pedra> monteDeCompras;
 
-    private Botao botaoPassarVez;
-    private Botao botaoRummikub;
-
     private Jogador jogador;
     private Jogador cpu;
+    private boolean jogadorInicial;
+    private boolean cpuInicial;
 
     private Jogador turno;
+    private boolean turnoInicial;
 
-    private FrameWrapper frameWrapper;
-    private LayeredPaneWrapper paneWrapper;
+    private int somatorioDaMesa;
 
     public Game(JLayeredPane panel, FrameWrapper frameWrapper){
         this.frameWrapper = frameWrapper;
@@ -43,6 +49,9 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
         this.jogador = new JogadorPessoa();
         this.cpu = new JogadorCPU();
+        this.jogadorInicial = true;
+        this.cpuInicial = true;
+        this.turnoInicial = true;
 
         inicializaBotoes();
 
@@ -61,6 +70,11 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         int botaoRummikubY = botaoPassarVezY - 8 - botaoRummikub.getHeight();
         botaoRummikub.moveTo(panel.getWidth() - 8 - botaoRummikub.getWidth(), botaoRummikubY);
         botaoRummikub.setClickListener(() -> rummikubButtonPressed());
+
+        botaoFinalizarJogada = novoBotao(new Botao(Botao.TIPO_FINALIZAR_JOGADA));
+        int botaoFinalizarJogadaY = botaoRummikubY - 8 - botaoFinalizarJogada.getHeight();
+        botaoFinalizarJogada.moveTo(panel.getWidth() - 8 - botaoFinalizarJogada.getWidth(), botaoFinalizarJogadaY);
+        botaoFinalizarJogada.setClickListener(() -> finalizarJogadaButtonPressed());
     }
 
     private Botao novoBotao(Botao botao) {
@@ -76,15 +90,23 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private void setTurno(Jogador turno){
         this.turno = turno;
 
-        if(turno == jogador)
+        if(turno == jogador) {
+            turnoInicial = jogadorInicial;
             enableButtons();
-        else if(turno == cpu)
+        }
+        else if(turno == cpu) {
+            turnoInicial = cpuInicial;
             disableButtons();
+        }
 
         turno.onInicioDoTurno(this);
     }
 
     private void proximoTurno() {
+        somatorioDaMesa = 0;
+        for(Conjunto c : mesa)
+            somatorioDaMesa += c.getPontos();
+
         if(turno == jogador)
             setTurno(cpu);
         else if (turno == cpu)
@@ -94,10 +116,13 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private void enableButtons() {
         botaoPassarVez.setEnabled();
         botaoRummikub.setEnabled();
+        botaoFinalizarJogada.setEnabled();
     }
 
     private void disableButtons() {
         botaoPassarVez.setDisabled();
+        botaoFinalizarJogada.setDisabled();
+        botaoRummikub.setDisabled();
     }
 
     private void inicializaMonteDeCompras(){
@@ -129,6 +154,8 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     }
 
     private void inicializaPartida(){
+        somatorioDaMesa = 0;
+
         //cada jogador compra 14 peças
         for(int i = 0; i < 14; i++) {
             jogador.comprarPedra(monteDeCompras.pop(), grid);
@@ -163,14 +190,12 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     }
 
     /** contagem de pontos dos conjuntos da jogada inicial **/
-    private int pontuaJogadaInicial(){
-        int pontos = 0;
-        List<Conjunto> conjuntos = turno.getConjuntosJogada();
+    private int pontuaJogada(){
+        int somatorioAtual = 0;
+        for(Conjunto c : mesa)
+            somatorioAtual += c.getPontos();
 
-        for (Conjunto conjunto : conjuntos)
-            pontos += conjunto.getPontos();
-
-        return pontos;
+        return somatorioAtual - somatorioDaMesa;
     }
 
     /**
@@ -184,7 +209,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
     /** true se jogada inicial é válida **/
     private boolean validaJogadaInicial() {
-        return pontuaJogadaInicial() >= 30;
+        return pontuaJogada() >= 30;
     }
 
     public Pedra novaPedra(Pedra pedra){
@@ -308,6 +333,23 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     public void rummikubButtonPressed() {
         if (turno.getPedras().isEmpty())
             finalizaPartida();
+    }
+
+    /** Botão de Finalizar Jogada foi apertado, verifica se pode **/
+    @Override
+    public void finalizarJogadaButtonPressed() {
+        if(turnoInicial && pontuaJogada() < 30) // jogada inicial tem que fazer pelo menos 30 pontos
+            return;
+
+        if(pontuaJogada() <= 0) // jogador deve descer pelo menos uma peça na mesa para valer a jogada
+            return;
+
+        if(turno == jogador)
+            jogadorInicial = false;
+        else if(turno == cpu)
+            cpuInicial = false;
+
+        proximoTurno();
     }
 
     @Override

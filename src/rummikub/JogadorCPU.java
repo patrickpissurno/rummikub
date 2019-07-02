@@ -2,6 +2,7 @@ package rummikub;
 
 import rummikub.interfaces.GameUIs;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,10 @@ public class JogadorCPU extends Jogador {
 
     @Override
     public void onInicioDoTurno(GameUIs ui) {
-        ui.passarAVezButtonPressed();
+        final Timer t = new Timer(4000, (e) -> {
+            ui.passarAVezButtonPressed();
+        });
+        t.setRepeats(false);
+        t.start();
     }
 }
