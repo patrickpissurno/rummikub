@@ -5,6 +5,7 @@ import java.util.*;
 public class Conjunto {
     private LinkedList<Pedra> pedras;
     private boolean isNew;
+    private boolean frozen;
 
     public Conjunto(LinkedList<Pedra> pedras){
         isNew = true;
@@ -200,6 +201,18 @@ public class Conjunto {
 
     public void setOld() {
         isNew = false;
+    }
+
+    public void freeze(){
+        frozen = true;
+    }
+
+    public void unfreeze(){
+        frozen = false;
+    }
+
+    public boolean isFrozen(){
+        return frozen;
     }
 
     public ArrayList<Pedra> getPedras(){

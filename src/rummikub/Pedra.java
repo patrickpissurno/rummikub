@@ -129,6 +129,9 @@ public class Pedra implements GameObject {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
 
+                if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+                    return;
+
                 mov.moveToFront(spriteHolder);
 
                 locationBeforeDrag = spriteHolder.getLocation();
@@ -136,6 +139,9 @@ public class Pedra implements GameObject {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mousePressed(e);
+
+                if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+                    return;
 
                 final Point position = spriteHolder.getLocation();
                 moveTo(grid, position.x, position.y);
@@ -195,6 +201,11 @@ public class Pedra implements GameObject {
                         return;
                     }
 
+                    if(vizinho.conjunto.isFrozen()){ // se o conjunto estiver frozen, não pode ser modificado
+                        rollback.run();
+                        return;
+                    }
+
                     vizinho.conjunto.add(Pedra.this);
                     vizinho.conjunto.sort(grid);
                 }
@@ -212,6 +223,9 @@ public class Pedra implements GameObject {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+
+                if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+                    return;
 
                 final Point absoluteMouse = MouseInfo.getPointerInfo().getLocation();
                 final Point windowLocation = loc.getLocation();

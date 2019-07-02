@@ -103,6 +103,14 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
         snapshot = new GameSnapshot(todasAsPedras, mesa);
 
+        // na jogada inicial os jogadores não podem usar as peças da mesa
+        for(Conjunto c : mesa) {
+            if (turnoInicial)
+                c.freeze();
+            else
+                c.unfreeze();
+        }
+
         turno.onInicioDoTurno(this);
     }
 
