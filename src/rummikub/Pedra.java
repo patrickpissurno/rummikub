@@ -190,6 +190,11 @@ public class Pedra implements GameObject {
                 final Pedra vizinho = vizinhoEsquerda != null ? vizinhoEsquerda : vizinhoDireita;
 
                 if(vizinho != null){
+                    if(vizinho.conjunto == null){ // o único caso que o conjunto é nulo é se ele estiver tentando arrastar de volta para a mão
+                        rollback.run();
+                        return;
+                    }
+
                     vizinho.conjunto.add(Pedra.this);
                     vizinho.conjunto.sort(grid);
                 }

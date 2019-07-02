@@ -19,15 +19,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rummikub/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="354" column="8" selection-start-line="354" selection-start-column="8" selection-end-line="354" selection-end-column="8" />
+            <state relative-caret-position="153">
+              <caret line="346" column="39" selection-start-line="346" selection-start-column="39" selection-end-line="346" selection-end-column="39" />
               <folding>
-                <element signature="e#12334#12335#0" expanded="true" />
-                <element signature="e#12423#12424#0" expanded="true" />
-                <element signature="e#12518#12519#0" expanded="true" />
+                <element signature="e#12326#12327#0" expanded="true" />
+                <element signature="e#12415#12416#0" expanded="true" />
+                <element signature="e#12510#12511#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/rummikub/Pedra.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="376">
+              <caret line="192" column="53" selection-start-line="192" selection-start-column="53" selection-end-line="192" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -150,8 +162,8 @@
         <option value="$PROJECT_DIR$/src/rummikub/Jogador.java" />
         <option value="$PROJECT_DIR$/src/rummikub/JogadorCPU.java" />
         <option value="$PROJECT_DIR$/src/rummikub/GameSnapshot.java" />
-        <option value="$PROJECT_DIR$/src/rummikub/Pedra.java" />
         <option value="$PROJECT_DIR$/src/rummikub/Game.java" />
+        <option value="$PROJECT_DIR$/src/rummikub/Pedra.java" />
       </list>
     </option>
   </component>
@@ -569,16 +581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rummikub/Pedra.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="128" column="52" lean-forward="true" selection-start-line="128" selection-start-column="52" selection-end-line="128" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -588,12 +590,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="354" column="8" selection-start-line="354" selection-start-column="8" selection-end-line="354" selection-end-column="8" />
+        <state relative-caret-position="153">
+          <caret line="346" column="39" selection-start-line="346" selection-start-column="39" selection-end-line="346" selection-end-column="39" />
           <folding>
-            <element signature="e#12334#12335#0" expanded="true" />
-            <element signature="e#12423#12424#0" expanded="true" />
-            <element signature="e#12518#12519#0" expanded="true" />
+            <element signature="e#12326#12327#0" expanded="true" />
+            <element signature="e#12415#12416#0" expanded="true" />
+            <element signature="e#12510#12511#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rummikub/Pedra.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="192" column="53" selection-start-line="192" selection-start-column="53" selection-end-line="192" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
