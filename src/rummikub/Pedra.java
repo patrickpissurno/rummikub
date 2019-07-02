@@ -1,15 +1,13 @@
 package rummikub;
 
-import rummikub.interfaces.CollisionChecker;
-import rummikub.interfaces.GameObject;
-import rummikub.interfaces.MoveToFront;
-import rummikub.interfaces.WindowLocation;
+import rummikub.interfaces.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
 
 public class Pedra implements GameObject {
     public static final String TIPO_NUMERO_1 = "1";
@@ -57,7 +55,7 @@ public class Pedra implements GameObject {
     }
 
     @Override
-    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
+    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj) {
         versoSprite = new ImageIcon(Utils.getResource("assets/pedra_verso.png"));
 
         if(tipo.equals(TIPO_CORINGA)) {
@@ -71,7 +69,7 @@ public class Pedra implements GameObject {
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, versoSprite.getIconWidth(), versoSprite.getIconHeight());
 
-        setupMouseEvents(grid, loc, mov, col);
+        setupMouseEvents(grid, loc, mov, col, conj);
 
         return spriteHolder;
     }
@@ -125,7 +123,7 @@ public class Pedra implements GameObject {
         this.conjunto = conjunto;
     }
 
-    private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col){
+    private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj){
         spriteHolder.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -142,10 +140,66 @@ public class Pedra implements GameObject {
                 final Point position = spriteHolder.getLocation();
                 moveTo(grid, position.x, position.y);
 
-                if(col.checkCollision(Pedra.this, 0) != null){ //se colidiu faz rollback
+                // simplesmente para fins de debug, printa o estado atual dos conjuntos lógicos pro stdout
+                final Runnable log = () -> {
+                    System.out.println();
+                    for(Conjunto c : conj.getConjuntos())
+                        System.out.println(c + " -> seq? " + (c.isSequencia() ? "s" : "n") + "; grupo? " + (c.isGrupo() ? "s" : "n"));
+                };
+
+                final Conjunto oldConjunto = Pedra.this.conjunto;
+
+                // se remove do conjunto antigo
+                final ArrayList<Conjunto> split = oldConjunto == null ? null : oldConjunto.split(Pedra.this);
+                if(oldConjunto != null) {
+                    conj.removeConjunto(oldConjunto);
+
+                    for (Conjunto c : split)
+                        if (c.size() > 0)
+                            conj.addConjunto(c);
+                }
+
+                final Runnable rollback = () -> {
                     moveTo(grid, locationBeforeDrag.x, locationBeforeDrag.y);
                     locationBeforeDrag = null;
+
+                    if(oldConjunto != null) {
+                        // desfaz o split
+                        for (Conjunto c : split)
+                            conj.removeConjunto(c);
+                        final Conjunto c = new Conjunto(oldConjunto.getPedras());
+                        conj.addConjunto(c);
+                    }
+
+                    log.run();
+                };
+
+                if(col.checkCollision(Pedra.this, 0) != null){ //se colidiu faz rollback
+                    rollback.run();
+                    return;
                 }
+
+                final Pedra vizinhoEsquerda = col.checkCollision(Pedra.this, -grid.getCellSizeInPx());
+                final Pedra vizinhoDireita = col.checkCollision(Pedra.this, grid.getCellSizeInPx());
+
+                if(vizinhoEsquerda != null && vizinhoDireita != null) { //não pode mover, pois o uniria dois conjuntos distintos
+                    rollback.run();
+                    return;
+                }
+
+                final Pedra vizinho = vizinhoEsquerda != null ? vizinhoEsquerda : vizinhoDireita;
+
+                if(vizinho != null){
+                    vizinho.conjunto.add(Pedra.this);
+                    vizinho.conjunto.sort(grid);
+                }
+                else {
+                    final Conjunto c = new Conjunto(new ArrayList<>());
+                    c.add(Pedra.this);
+                    conj.addConjunto(c);
+                }
+
+                log.run();
             }
         });
 

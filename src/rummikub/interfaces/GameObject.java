@@ -10,7 +10,7 @@ public interface GameObject {
      * @param grid instância da classe Grid
      * @return
      */
-    JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col);
+    JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj);
 
 
     /**

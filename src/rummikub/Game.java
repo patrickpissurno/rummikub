@@ -2,6 +2,7 @@ package rummikub;
 
 import rummikub.interfaces.CollisionChecker;
 import rummikub.interfaces.GameUIs;
+import rummikub.interfaces.GerenciadorDeConjuntos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class Game implements CollisionChecker, GameUIs {
+public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private JLayeredPane panel;
     private Grid grid;
 
@@ -52,7 +53,7 @@ public class Game implements CollisionChecker, GameUIs {
 
     private void inicializaBotoes() {
         botaoPassarVez = novoBotao(new Botao(Botao.TIPO_PASSAR_A_VEZ));
-        int botaoPassarVezY = panel.getHeight() - 64 - botaoPassarVez.getHeight();
+        int botaoPassarVezY = panel.getHeight()/2 - 64 - botaoPassarVez.getHeight();
         botaoPassarVez.moveTo(panel.getWidth() - 8 - botaoPassarVez.getWidth(), botaoPassarVezY);
         botaoPassarVez.setClickListener(() -> passarAVezButtonPressed());
 
@@ -63,7 +64,7 @@ public class Game implements CollisionChecker, GameUIs {
     }
 
     private Botao novoBotao(Botao botao) {
-        final JLabel sprite = botao.onCreate(grid, frameWrapper, paneWrapper, this);
+        final JLabel sprite = botao.onCreate(grid, frameWrapper, paneWrapper, this, this);
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
@@ -187,7 +188,7 @@ public class Game implements CollisionChecker, GameUIs {
     }
 
     public Pedra novaPedra(Pedra pedra){
-        final JLabel sprite = pedra.onCreate(grid, frameWrapper, paneWrapper, this);
+        final JLabel sprite = pedra.onCreate(grid, frameWrapper, paneWrapper, this, this);
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
@@ -307,5 +308,20 @@ public class Game implements CollisionChecker, GameUIs {
     public void rummikubButtonPressed() {
         if (turno.getPedras().isEmpty())
             finalizaPartida();
+    }
+
+    @Override
+    public List<Conjunto> getConjuntos() {
+        return new ArrayList<>(this.mesa);
+    }
+
+    @Override
+    public void addConjunto(Conjunto c) {
+        this.mesa.add(c);
+    }
+
+    @Override
+    public void removeConjunto(Conjunto c) {
+        this.mesa.remove(c);
     }
 }

@@ -9,12 +9,20 @@ public class Conjunto {
     public Conjunto(LinkedList<Pedra> pedras){
         isNew = true;
         this.pedras = pedras;
+
+        for(Pedra p : pedras)
+            p.setConjunto(this);
+
         sincronizaOrdenacaoTabuleiro();
     }
 
     public Conjunto(List<Pedra> pedras){
         isNew = true;
-        this.pedras = new LinkedList<Pedra>(pedras);
+        this.pedras = new LinkedList<>(pedras);
+
+        for(Pedra p : pedras)
+            p.setConjunto(this);
+
         sincronizaOrdenacaoTabuleiro();
     }
 
@@ -89,7 +97,8 @@ public class Conjunto {
         return conjuntos;
     }
 
-    // RETORNA NULL caso não tenha split
+    /** RETORNA NULL caso não tenha split **/
+    @Deprecated // não está sendo usado na prática
     public ArrayList<Conjunto> movePedra(Pedra pedra, Conjunto conjuntoDestino){
         sincronizaOrdenacaoTabuleiro();
 
@@ -107,6 +116,7 @@ public class Conjunto {
 
     public void add(Pedra pedra){
         pedras.add(pedra);
+        pedra.setConjunto(this);
         sincronizaOrdenacaoTabuleiro();
     }
 
@@ -141,6 +151,41 @@ public class Conjunto {
         pedras.sort(Comparator.comparingInt(pedra -> pedra.getLocation().x));
     }
 
+    public void sort(Grid grid){
+        if(!isSequencia()) //só faz sentido ordenar se for sequência
+            return;
+
+        int startX = pedras.getFirst().getLocation().x;
+        int y = pedras.getFirst().getLocation().y;
+
+        // ordenação inicial joga todos os coringas pro final
+        pedras.sort((a, b) -> {
+            int _a = a.getTipo().equals(Pedra.TIPO_CORINGA) ? 500 : Integer.parseInt(a.getTipo());
+            int _b = b.getTipo().equals(Pedra.TIPO_CORINGA) ? 500 : Integer.parseInt(b.getTipo());
+            return _a - _b;
+        });
+
+        // percorre a lista identificando buracos e movendo o coringa para preenchê-lo
+        for(int i = 1; i < pedras.size(); i++) {
+            final Pedra anterior = pedras.get(i - 1);
+            final Pedra atual = pedras.get(i);
+
+            if(anterior.getTipo().equals(Pedra.TIPO_CORINGA) || atual.getTipo().equals(Pedra.TIPO_CORINGA))
+                continue;
+
+            int diff = Integer.parseInt(atual.getTipo()) - Integer.parseInt(anterior.getTipo());
+            if(diff > 1 && pedras.getLast().getTipo().equals(Pedra.TIPO_CORINGA)){
+                final Pedra coringa = pedras.getLast();
+                pedras.removeLast();
+                pedras.add(i, coringa);
+            }
+        }
+
+        // aplica a reordenação à parte gráfica
+        for(int i = 0; i < pedras.size(); i++)
+            pedras.get(i).moveTo(grid, startX + (i * grid.getCellSizeInPx()), y);
+    }
+
     public int size(){
         return pedras.size();
     }
@@ -155,5 +200,20 @@ public class Conjunto {
 
     public void setOld() {
         isNew = false;
+    }
+
+    public ArrayList<Pedra> getPedras(){
+        return new ArrayList<>(pedras);
+    }
+
+    /** somente para fins de debug **/
+    @Override
+    public String toString(){
+        String r = "{";
+        for(int i = 0; i < pedras.size(); i++)
+            r += (i > 0 ? " " : "") + "(" + pedras.get(i).getTipo() + ")";
+
+        r += "}";
+        return r;
     }
 }

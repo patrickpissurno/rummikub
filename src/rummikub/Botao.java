@@ -1,9 +1,6 @@
 package rummikub;
 
-import rummikub.interfaces.CollisionChecker;
-import rummikub.interfaces.GameObject;
-import rummikub.interfaces.MoveToFront;
-import rummikub.interfaces.WindowLocation;
+import rummikub.interfaces.*;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -31,7 +28,7 @@ public class Botao implements GameObject {
     }
 
     @Override
-    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
+    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj) {
         if (tipo.equals(TIPO_PASSAR_A_VEZ)) {
             disabledButton = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez_disabled.png"));
             downButton = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez_down.png"));
@@ -47,7 +44,7 @@ public class Botao implements GameObject {
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, disabledButton.getIconWidth(), disabledButton.getIconHeight());
 
-        setupMouseEvents(grid, loc, mov, col);
+        setupMouseEvents();
 
         return spriteHolder;
     }
@@ -88,7 +85,7 @@ public class Botao implements GameObject {
         this.clickListener = listener;
     }
 
-    private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
+    private void setupMouseEvents() {
         spriteHolder.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
