@@ -1,5 +1,7 @@
 package rummikub;
 
+import rummikub.interfaces.GameUIs;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,4 +59,6 @@ public abstract class Jogador {
 
         return soma;
     }
+
+    public abstract void onInicioDoTurno(GameUIs ui);
 }

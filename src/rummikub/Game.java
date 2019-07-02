@@ -1,6 +1,7 @@
 package rummikub;
 
 import rummikub.interfaces.CollisionChecker;
+import rummikub.interfaces.GameUIs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class Game implements CollisionChecker {
+public class Game implements CollisionChecker, GameUIs {
     private JLayeredPane panel;
     private Grid grid;
 
@@ -48,13 +49,15 @@ public class Game implements CollisionChecker {
     }
 
     private void inicializaBotoes() {
-        botaoPassarVez = novoBotao(new Botao(Botao.TIPO_PASSAR_A_VEZ, this));
+        botaoPassarVez = novoBotao(new Botao(Botao.TIPO_PASSAR_A_VEZ));
         int botaoPassarVezY = panel.getHeight() - 64 - botaoPassarVez.getHeight();
         botaoPassarVez.moveTo(panel.getWidth() - 8 - botaoPassarVez.getWidth(), botaoPassarVezY);
+        botaoPassarVez.setClickListener(() -> passarAVezButtonPressed());
 
-        botaoRummikub = novoBotao(new Botao(Botao.TIPO_RUMMIKUB, this));
+        botaoRummikub = novoBotao(new Botao(Botao.TIPO_RUMMIKUB));
         int botaoRummikubY = botaoPassarVezY - 8 - botaoRummikub.getHeight();
         botaoRummikub.moveTo(panel.getWidth() - 8 - botaoRummikub.getWidth(), botaoRummikubY);
+        botaoRummikub.setClickListener(() -> rummikubButtonPressed());
     }
 
     private Botao novoBotao(Botao botao) {
@@ -66,33 +69,22 @@ public class Game implements CollisionChecker {
         return botao;
     }
 
-    public void jogadorAtualCompraPedra() {
-        if (monteDeCompras.empty())
-            finalizaPartida();
-        else {
-            turno.comprarPedra(monteDeCompras.pop(), grid);
-            passaVez();
-        }
-    }
+    private void setTurno(Jogador turno){
+        this.turno = turno;
 
-    /*
-     * verifica se o jogador pode "falar" rummikub
-     */
-
-    public void checkRummikub() {
-        if (turno.getPedras().isEmpty())
-            finalizaPartida();
-    }
-
-    private void passaVez() {
-        if(turno == jogador) {
-            turno = cpu;
-            disableButtons();
-        }
-        else if (turno == cpu) {
-            turno = jogador;
+        if(turno == jogador)
             enableButtons();
-        }
+        else if(turno == cpu)
+            disableButtons();
+
+        turno.onInicioDoTurno(this);
+    }
+
+    private void proximoTurno() {
+        if(turno == jogador)
+            setTurno(cpu);
+        else if (turno == cpu)
+            setTurno(jogador);
     }
 
     private void enableButtons() {
@@ -138,12 +130,10 @@ public class Game implements CollisionChecker {
         }
 
         //um jogador é escolhido aleatoriamente para começar
-        if(Utils.randomRange(0, 1) == 0) {
-            turno = jogador;
-            enableButtons();
-        }
+        if(Utils.randomRange(0, 1) == 0)
+            setTurno(jogador);
         else
-            turno = cpu;
+            setTurno(cpu);
     }
 
     /**
@@ -166,7 +156,7 @@ public class Game implements CollisionChecker {
 
     }
 
-    //contagem de pontos dos conjuntos da jogada inicial
+    /** contagem de pontos dos conjuntos da jogada inicial **/
     private int pontuaJogadaInicial(){
         int pontos = 0;
         List<Conjunto> conjuntos = turno.getConjuntosJogada();
@@ -186,7 +176,7 @@ public class Game implements CollisionChecker {
             conjunto.setOld();
     }
 
-    //true se jogada inicial é válida
+    /** true se jogada inicial é válida **/
     private boolean validaJogadaInicial() {
         return pontuaJogadaInicial() >= 30;
     }
@@ -293,12 +283,21 @@ public class Game implements CollisionChecker {
         return vencedor;
     }
 
-    public Grid getGrid() {
-        return grid;
+    /** Botão de Passar a Vez foi apertado, efetua a compra de pedra para o jogador atual e passa a vez **/
+    @Override
+    public void passarAVezButtonPressed() {
+        if (monteDeCompras.empty())
+            finalizaPartida();
+        else {
+            turno.comprarPedra(monteDeCompras.pop(), grid);
+            proximoTurno();
+        }
     }
 
-    public Jogador getJogador() {
-        return jogador;
+    /** Botão de Rummikub foi apertado, verifica se pode **/
+    @Override
+    public void rummikubButtonPressed() {
+        if (turno.getPedras().isEmpty())
+            finalizaPartida();
     }
-
 }

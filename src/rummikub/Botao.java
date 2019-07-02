@@ -14,7 +14,6 @@ public class Botao implements GameObject {
     private JLabel spriteHolder;
 
     private String tipo;
-    private Game game;
 
     private ImageIcon disabledButton;
     private ImageIcon downButton;
@@ -25,9 +24,10 @@ public class Botao implements GameObject {
     public static final String TIPO_PASSAR_A_VEZ = "passar_vez";
     public static final String TIPO_RUMMIKUB = "rummikub";
 
-    public Botao(String tipo, Game game) {
+    private Runnable clickListener;
+
+    public Botao(String tipo) {
         this.tipo = tipo;
-        this.game = game;
     }
 
     @Override
@@ -84,44 +84,29 @@ public class Botao implements GameObject {
         spriteHolder.setIcon(disabledButton);
     }
 
+    public void setClickListener(Runnable listener){
+        this.clickListener = listener;
+    }
+
     private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col) {
-        if (tipo.equals(TIPO_PASSAR_A_VEZ)) {
-            spriteHolder.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    super.mousePressed(e);
-                    if (isEnabled)
-                        spriteHolder.setIcon(downButton);
-                }
+        spriteHolder.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (isEnabled)
+                    spriteHolder.setIcon(downButton);
+            }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    super.mouseReleased(e);
-                    if (isEnabled) {
-                        spriteHolder.setIcon(button);
-                        game.jogadorAtualCompraPedra();
-                    }
-                }
-            });
-        }
-        else if (tipo.equals(TIPO_RUMMIKUB)) {
-            spriteHolder.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    super.mousePressed(e);
-                    if (isEnabled)
-                        spriteHolder.setIcon(downButton);
-                }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if (isEnabled) {
+                    spriteHolder.setIcon(button);
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    super.mouseReleased(e);
-                    if (isEnabled) {
-                        spriteHolder.setIcon(button);
-                        game.checkRummikub();
-                    }
+                    if(clickListener != null)
+                        clickListener.run();
                 }
-            });
-        }
+            }
+        });
     }
 }

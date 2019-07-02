@@ -1,5 +1,7 @@
 package rummikub;
 
+import rummikub.interfaces.GameUIs;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,5 +39,10 @@ public class JogadorCPU extends Jogador {
     @Override
     public int getSomatorioMao() {
         return super.getSomatorioMao();
+    }
+
+    @Override
+    public void onInicioDoTurno(GameUIs ui) {
+        ui.passarAVezButtonPressed();
     }
 }
