@@ -347,13 +347,16 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     /** Botão de Finalizar Jogada foi apertado, verifica se pode **/
     @Override
     public void finalizarJogadaButtonPressed() {
+        if(!validaMesa()) { // a mesa precisa ser válida
+            //provavelmente uma mensagem na tela seria mais sutil, mas como não temos
+            snapshot.restore(grid, this);
+            return;
+        }
+        
         if(turnoInicial && pontuaJogada() < 30) // jogada inicial tem que fazer pelo menos 30 pontos
             return;
 
         if(pontuaJogada() <= 0) // jogador deve descer pelo menos uma peça na mesa para valer a jogada
-            return;
-
-        if(!validaMesa()) // a mesa precisa ser válida
             return;
 
         if(turno == jogador)
