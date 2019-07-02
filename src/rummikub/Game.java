@@ -189,7 +189,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
     }
 
-    /** contagem de pontos dos conjuntos da jogada inicial **/
+    /** contagem de pontos dos conjuntos da jogada **/
     private int pontuaJogada(){
         int somatorioAtual = 0;
         for(Conjunto c : mesa)
@@ -198,18 +198,22 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         return somatorioAtual - somatorioDaMesa;
     }
 
+    /** determina se a mesa atual é válida ou não **/
+    private boolean validaMesa(){
+        for(Conjunto c : mesa)
+            if(!c.isSequencia() && !c.isGrupo())
+                return false;
+        return true;
+    }
+
     /**
      * deve ser chamado no final de cada jogada validada
      * seta todos os conjuntos da mesa como não novo
      */
+    @Deprecated //para que que isso serve?
     private void afterJogada() {
         for (Conjunto conjunto : mesa)
             conjunto.setOld();
-    }
-
-    /** true se jogada inicial é válida **/
-    private boolean validaJogadaInicial() {
-        return pontuaJogada() >= 30;
     }
 
     public Pedra novaPedra(Pedra pedra){
@@ -342,6 +346,9 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             return;
 
         if(pontuaJogada() <= 0) // jogador deve descer pelo menos uma peça na mesa para valer a jogada
+            return;
+
+        if(!validaMesa()) // a mesa precisa ser válida
             return;
 
         if(turno == jogador)
