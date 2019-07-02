@@ -172,6 +172,10 @@ public class JogadorCPU extends Jogador {
                         coringasUsados += diff - 1;
                         if (coringasUsados > coringas.size())
                             coringasUsados = coringas.size();
+
+                        for(int z = 0; z < diff - 1 && z < coringas.size(); z++)
+                            c.add(coringas.get(z));
+
                         valido = true;
                     } else if (diff == 1)
                         valido = true;
