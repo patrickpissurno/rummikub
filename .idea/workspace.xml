@@ -57,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/rummikub/JogadorCPU.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="176" column="51" selection-start-line="176" selection-start-column="51" selection-end-line="176" selection-end-column="51" />
+            <state relative-caret-position="290">
+              <caret line="86" column="150" selection-start-line="86" selection-start-column="150" selection-end-line="86" selection-end-column="150" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -611,8 +611,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/JogadorCPU.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="176" column="51" selection-start-line="176" selection-start-column="51" selection-end-line="176" selection-end-column="51" />
+        <state relative-caret-position="290">
+          <caret line="86" column="150" selection-start-line="86" selection-start-column="150" selection-end-line="86" selection-end-column="150" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

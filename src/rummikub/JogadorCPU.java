@@ -84,7 +84,10 @@ public class JogadorCPU extends Jogador {
                 if((y == 0 && x == 0) || (y == grid.getCellSizeInPx() && x == 0))
                     continue;
 
-                if(x + (grid.getCellSizeInPx() * quantidade) > Main.WINDOW_WIDTH)
+                if(y < 350 && x + (grid.getCellSizeInPx() * quantidade) > Main.WINDOW_WIDTH - 250) // impede de botar pedras em baixo da UI dos botões
+                    continue;
+
+                if(x + (grid.getCellSizeInPx() * quantidade) > Main.WINDOW_WIDTH) // impede de marcar espaços fora de tela como válidos
                     continue;
 
                 fake.moveTo(grid, x, y);
