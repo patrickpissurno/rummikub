@@ -8,6 +8,7 @@ import rummikub.interfaces.MoveToFront;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JogadorCPU extends Jogador {
@@ -104,13 +105,96 @@ public class JogadorCPU extends Jogador {
     }
 
     private ConjuntoVirtual identificaMelhorJogada(){
-        sortPedras(null, Jogador.MODO_ORDENACAO_NUMERO_DEPOIS_COR);
-
         final List<Pedra> coringas = new ArrayList<>();
         for(Pedra p : pedras) {
             if(p.getTipo().equals(Pedra.TIPO_CORINGA))
                 coringas.add(p);
         }
+
+        List<ConjuntoVirtual> jogadasValidas = identificaJogadasValidasGrupos(coringas);
+        jogadasValidas.addAll(identificaJogadasValidasSequencia(coringas));
+
+        // ordena as jogadas da melhor para a pior
+        jogadasValidas.sort((a, b) -> b.getPontos() - a.getPontos());
+
+        if(jogadasValidas.isEmpty())
+            return null;
+
+        return jogadasValidas.get(0);
+    }
+
+    private List<ConjuntoVirtual> identificaJogadasValidasSequencia(List<Pedra> coringas){
+        sortPedras(null, Jogador.MODO_ORDENACAO_COR_DEPOIS_NUMERO);
+        Collections.reverse(pedras);
+
+        final List<ConjuntoVirtual> jogadasValidas = new ArrayList<>();
+        for(int j = 0; j < pedras.size(); j++) {
+            final List<ConjuntoVirtual> jogadasAlternativas = new ArrayList<>();
+
+            String cor = "";
+            int coringasUsados = 0;
+
+            for (int i = j; i < pedras.size(); i++) {
+                final Pedra p = pedras.get(i);
+
+                if (p.getTipo().equals(Pedra.TIPO_CORINGA))
+                    continue;
+
+                if (!p.getCor().equals(cor)) {
+                    cor = p.getCor();
+
+                    final ConjuntoVirtual c = new ConjuntoVirtual(new ArrayList<>());
+                    c.add(p);
+                    jogadasAlternativas.add(c);
+                    coringasUsados = 0;
+                } else {
+                    final ConjuntoVirtual c = jogadasAlternativas.get(jogadasAlternativas.size() - 1);
+                    final Pedra anterior = c.getPedras().get(c.getPedras().size() - 1);
+
+                    int coringasDisponiveis = coringas.size() - coringasUsados;
+
+                    // impede que forme sequencias com números duplicados
+                    final boolean duplicado = anterior.getTipo().equals(p.getTipo());
+                    if (duplicado) {
+                        i -= 1;
+                        cor = "";
+                        continue;
+                    }
+
+                    boolean valido = false;
+
+                    int diff = Integer.parseInt(anterior.getTipo()) - Integer.parseInt(p.getTipo());
+                    if (diff > 1 && diff - coringasDisponiveis <= 1) { //se a diferença for maior que 1, mas a gente tem coringas disponíveis, vamos usá-los
+                        coringasUsados += diff - 1;
+                        if (coringasUsados > coringas.size())
+                            coringasUsados = coringas.size();
+                        valido = true;
+                    } else if (diff == 1)
+                        valido = true;
+
+                    if (!valido){
+                        i -= 1;
+                        cor = "";
+                        continue;
+                    }
+
+                    c.add(p);
+                }
+            }
+
+            for(ConjuntoVirtual c : jogadasAlternativas){
+                if(c.getPontos() < 1)
+                    continue;
+
+                jogadasValidas.add(c);
+            }
+        }
+
+        return jogadasValidas;
+    }
+
+    private List<ConjuntoVirtual> identificaJogadasValidasGrupos(List<Pedra> coringas){
+        sortPedras(null, Jogador.MODO_ORDENACAO_NUMERO_DEPOIS_COR);
 
         final List<ConjuntoVirtual> jogadas = new ArrayList<>();
 
@@ -161,13 +245,7 @@ public class JogadorCPU extends Jogador {
             }
         }
 
-        // ordena as jogadas da melhor para a pior
-        jogadasValidas.sort((a, b) -> b.getPontos() - a.getPontos());
-
-        if(jogadasValidas.isEmpty())
-            return null;
-
-        return jogadasValidas.get(0);
+        return jogadasValidas;
     }
 
     @Override
