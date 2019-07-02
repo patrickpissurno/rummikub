@@ -2,7 +2,9 @@ package test;
 
 import org.junit.jupiter.api.Test;
 import rummikub.Conjunto;
+import rummikub.ConjuntoVirtual;
 import rummikub.Pedra;
+import rummikub.PedraVirtual;
 
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isGrupo());
     }
@@ -33,7 +35,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isGrupo());
     }
@@ -46,7 +48,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isGrupo());
     }
@@ -58,7 +60,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isGrupo());
     }
@@ -71,7 +73,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertFalse(conjunto.isGrupo());
     }
@@ -83,7 +85,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertFalse(conjunto.isGrupo());
     }
@@ -96,7 +98,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertFalse(conjunto.isGrupo());
     }
@@ -108,7 +110,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertFalse(conjunto.isGrupo());
     }
@@ -120,7 +122,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isSequencia());
     }
@@ -132,7 +134,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isSequencia());
     }
@@ -144,7 +146,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isSequencia());
     }
@@ -156,7 +158,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertTrue(conjunto.isSequencia());
     }
@@ -168,7 +170,7 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertFalse(conjunto.isSequencia());
     }
@@ -179,21 +181,50 @@ class ConjuntoTest {
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
         pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         assertFalse(conjunto.isSequencia());
     }
 
     @Test
-    void split5Pedras() {
+    void sequenciaComPedraRepetida() {
         LinkedList<Pedra> pedras = new LinkedList<>();
         pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
 
-        Conjunto conjunto = new Conjunto(pedras);
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
+
+        assertFalse(conjunto.isSequencia());
+    }
+
+    @Test
+    void sequenciaComPedraRepetidaECoringa() {
+        LinkedList<Pedra> pedras = new LinkedList<>();
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
+        pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
+        pedras.add(new Pedra(Pedra.TIPO_CORINGA));
+
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
+
+        assertFalse(conjunto.isSequencia());
+    }
+
+
+
+    @Test
+    void split5Pedras() {
+        LinkedList<Pedra> pedras = new LinkedList<>();
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
+
+        ConjuntoVirtual conjunto = new ConjuntoVirtual(pedras);
 
         ArrayList<Conjunto> conjuntos = conjunto.split(pedras.get(2));
 
@@ -214,36 +245,12 @@ class ConjuntoTest {
         pedras2.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
         pedras2.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
-        Conjunto conjunto1 = new Conjunto(pedras1);
+        ConjuntoVirtual conjunto1 = new ConjuntoVirtual(pedras1);
 
-        Conjunto conjunto2 = new Conjunto(pedras2);
+        ConjuntoVirtual conjunto2 = new ConjuntoVirtual(pedras2);
 
         conjunto1.movePedra(pedras1.getFirst(), conjunto2);
         assertEquals(conjunto1.size(), 4);
         assertEquals(conjunto2.size(), 3);
     }
-
-    @Test
-    void movePedraDoMeio() {
-        LinkedList<Pedra> pedras1 = new LinkedList<>();
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras1.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
-
-        LinkedList<Pedra> pedras2 = new LinkedList<>();
-        pedras2.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras2.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
-
-        Conjunto conjunto1 = new Conjunto(pedras1);
-
-        Conjunto conjunto2 = new Conjunto(pedras2);
-
-        ArrayList<Conjunto> conjuntos = conjunto1.movePedra(pedras1.get(2), conjunto2);
-        assertEquals(conjuntos.get(0).size(), 2);
-        assertEquals(conjuntos.get(1).size(), 2);
-        assertEquals(conjunto2.size(), 3);
-    }
-
 }

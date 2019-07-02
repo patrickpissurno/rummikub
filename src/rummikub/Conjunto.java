@@ -76,8 +76,12 @@ public class Conjunto {
 
             if (pedras.get(i).getTipo().equals(Pedra.TIPO_CORINGA))
                 nCoringas++;
-            else
-                numeros.add(Integer.parseInt(pedras.get(i).getTipo()));
+            else {
+                if (!numeros.contains(Integer.parseInt(pedras.get(i).getTipo())))
+                    numeros.add(Integer.parseInt(pedras.get(i).getTipo()));
+                else
+                    return false;   //caso de duplicata
+            }
         }
 
         Collections.sort(numeros);
