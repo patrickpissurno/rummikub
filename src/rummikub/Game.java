@@ -208,6 +208,8 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
      * deve ser chamada após a validação de final de partida
      */
     private void finalizaPartida() {
+        timer.stop();
+
         // vitoria alternativa || vitoria padrão
         if (jogador == getVencedorVitoriaAlternativa(jogador, cpu) || jogador.getPedras().size() == 0) {
 
