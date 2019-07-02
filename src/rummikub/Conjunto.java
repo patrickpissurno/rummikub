@@ -1,9 +1,6 @@
 package rummikub;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Conjunto {
     private LinkedList<Pedra> pedras;
@@ -12,14 +9,18 @@ public class Conjunto {
     public Conjunto(LinkedList<Pedra> pedras){
         isNew = true;
         this.pedras = pedras;
+        sincronizaOrdenacaoTabuleiro();
     }
 
     public Conjunto(List<Pedra> pedras){
         isNew = true;
         this.pedras = new LinkedList<Pedra>(pedras);
+        sincronizaOrdenacaoTabuleiro();
     }
 
     public boolean isGrupo(){
+        sincronizaOrdenacaoTabuleiro();
+
         if(pedras.size() < 3 || pedras.size() > 4)
             return false;
 
@@ -46,6 +47,8 @@ public class Conjunto {
     }
 
     public boolean isSequencia(){
+        sincronizaOrdenacaoTabuleiro();
+
         if (pedras.size() < 3)
             return false;
 
@@ -76,6 +79,8 @@ public class Conjunto {
     }
 
     public ArrayList<Conjunto> split(Pedra pedraASerRemovida){
+        sincronizaOrdenacaoTabuleiro();
+
         ArrayList<Conjunto> conjuntos = new ArrayList<>();
         int i = pedras.indexOf(pedraASerRemovida);
         conjuntos.add(new Conjunto(pedras.subList(0, i)));
@@ -86,6 +91,8 @@ public class Conjunto {
 
     // RETORNA NULL caso não tenha split
     public ArrayList<Conjunto> movePedra(Pedra pedra, Conjunto conjuntoDestino){
+        sincronizaOrdenacaoTabuleiro();
+
         // caso de borda - não precisa de split
         if (pedras.indexOf(pedra) == pedras.size() - 1 || pedras.indexOf(pedra) == 0) {
             pedras.remove(pedra);
@@ -100,6 +107,7 @@ public class Conjunto {
 
     public void add(Pedra pedra){
         pedras.add(pedra);
+        sincronizaOrdenacaoTabuleiro();
     }
 
     // usado para contagem de pontos da jogada inicial
@@ -127,6 +135,10 @@ public class Conjunto {
             return ((primeiroValor + ultimoValor) * pedras.size())/2;
         }
         return 0;
+    }
+
+    private void sincronizaOrdenacaoTabuleiro(){
+        pedras.sort(Comparator.comparingInt(pedra -> pedra.getLocation().x));
     }
 
     public int size(){

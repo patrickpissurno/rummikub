@@ -1,9 +1,9 @@
 package rummikub.interfaces;
 
-import javax.swing.*;
+import rummikub.Pedra;
 
 public interface CollisionChecker {
 
-    /** Verifica se este JLabel está colidindo com os outros **/
-    boolean checkCollision(JLabel me);
+    /** Verifica se esta Pedra está colidindo com os outras **/
+    Pedra checkCollision(Pedra me, int offsetX);
 }

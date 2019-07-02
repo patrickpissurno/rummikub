@@ -46,6 +46,8 @@ public class Pedra implements GameObject {
 
     private Point locationBeforeDrag;
 
+    private Conjunto conjunto;
+
     public Pedra(String tipo, String cor){
         this.tipo = tipo;
         this.cor = cor;
@@ -111,8 +113,16 @@ public class Pedra implements GameObject {
         return cor;
     }
 
+    public Point getLocation(){
+        return spriteHolder.getLocation();
+    }
+
     public void desvirar(){
         this.spriteHolder.setIcon(frenteSprite);
+    }
+
+    public void setConjunto(Conjunto conjunto){
+        this.conjunto = conjunto;
     }
 
     private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col){
@@ -132,7 +142,7 @@ public class Pedra implements GameObject {
                 final Point position = spriteHolder.getLocation();
                 moveTo(grid, position.x, position.y);
 
-                if(col.checkCollision(spriteHolder)){
+                if(col.checkCollision(Pedra.this, 0) != null){ //se colidiu faz rollback
                     moveTo(grid, locationBeforeDrag.x, locationBeforeDrag.y);
                     locationBeforeDrag = null;
                 }

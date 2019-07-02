@@ -14,6 +14,7 @@ public class Game implements CollisionChecker, GameUIs {
     private JLayeredPane panel;
     private Grid grid;
 
+    private List<Pedra> todasAsPedras;
     private List<Conjunto> mesa;
     private Stack<Pedra> monteDeCompras;
 
@@ -33,6 +34,7 @@ public class Game implements CollisionChecker, GameUIs {
         this.panel = panel;
         this.paneWrapper = new LayeredPaneWrapper(panel);
 
+        this.todasAsPedras = new ArrayList<>();
         this.mesa = new ArrayList<>();
         this.monteDeCompras = new Stack<>();
 
@@ -65,6 +67,7 @@ public class Game implements CollisionChecker, GameUIs {
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
+        panel.setLayer(sprite, JLayeredPane.MODAL_LAYER);
 
         return botao;
     }
@@ -106,6 +109,7 @@ public class Game implements CollisionChecker, GameUIs {
                 final Pedra pedra = novaPedra(new Pedra(tipos[j], cores[i % cores.length]));
                 pedra.moveTo(grid, 0, 0);
 
+                todasAsPedras.add(pedra);
                 monteDeCompras.push(pedra);
             }
         }
@@ -115,6 +119,7 @@ public class Game implements CollisionChecker, GameUIs {
             final Pedra pedra = novaPedra(new Pedra(Pedra.TIPO_CORINGA));
             pedra.moveTo(grid, 0, 0);
 
+            todasAsPedras.add(pedra);
             monteDeCompras.push(pedra);
         }
 
@@ -192,20 +197,23 @@ public class Game implements CollisionChecker, GameUIs {
 
     //documentação na interface CollisionChecker
     @Override
-    public boolean checkCollision(JLabel me) {
+    public Pedra checkCollision(Pedra me, int offsetX) {
         final Point a = me.getLocation();
+        a.x += offsetX;
+
         int size = grid.getCellSizeInPx();
 
-        for(Component c : panel.getComponentsInLayer(JLayeredPane.DEFAULT_LAYER)){
+        for(Pedra c : todasAsPedras){
             if(c.equals(me))
                 continue;
 
             final Point b = c.getLocation();
 
             if(a.x < b.x + size && a.x + size > b.x && a.y < b.y + size && a.y + size > b.y)
-                return true;
+                return c;
         }
-        return false;
+
+        return null;
     }
 
     /**
