@@ -151,8 +151,10 @@ public class Pedra implements GameObject {
         if(!this.virada) // não pode fazer drag de pedra virada
             return;
 
-        if(this.conjunto != null && this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+        if(this.conjunto != null && this.conjunto.isFrozen()) { // se o conjunto estiver frozen, não pode ser modificado
+            System.out.println("Não pode usar peças da mesa na jogada inicial");
             return;
+        }
 
         mov.moveToFront(spriteHolder);
 
@@ -248,7 +250,6 @@ public class Pedra implements GameObject {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                System.out.println("Não pode usar peças da mesa na jogada inicial");
                 beginDrag(mov);
             }
             @Override

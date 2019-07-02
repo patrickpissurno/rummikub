@@ -22,6 +22,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private Botao botaoRummikub;
     private Botao botaoFinalizarJogada;
     private JLabel tempoRestanteUI;
+    private GameOverDialog gameOverDialog;
 
     private List<Pedra> todasAsPedras;
     private List<Conjunto> mesa;
@@ -47,21 +48,29 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         this.panel = panel;
         this.paneWrapper = new LayeredPaneWrapper(panel);
 
-        this.todasAsPedras = new ArrayList<>();
-        this.mesa = new ArrayList<>();
-        this.monteDeCompras = new Stack<>();
-
         this.grid = new Grid(55);
-
-        this.jogador = new JogadorPessoa();
-        this.cpu = new JogadorCPU();
-        this.jogadorInicial = true;
-        this.cpuInicial = true;
-        this.turnoInicial = true;
 
         timer = new Timer(1000, (e) -> onTimerTick());
         timer.setRepeats(true);
         timer.setInitialDelay(1);
+
+        restart();
+    }
+
+    private void restart(){
+        panel.removeAll();
+
+        this.todasAsPedras = new ArrayList<>();
+        this.mesa = new ArrayList<>();
+        this.monteDeCompras = new Stack<>();
+
+        //TODO: o certo seria não reinstanciar os jogadores, somente resetar o estado deles, para preservar o histórico de pontuações
+        this.jogador = new JogadorPessoa();
+        this.cpu = new JogadorCPU();
+
+        this.jogadorInicial = true;
+        this.cpuInicial = true;
+        this.turnoInicial = true;
 
         inicializaInterfaceDeUsuario();
 
@@ -95,10 +104,15 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
         panel.add(tempoRestanteUI, new Integer(panel.getComponentCount() + 1));
         panel.setLayer(tempoRestanteUI, JLayeredPane.MODAL_LAYER);
+
+        gameOverDialog = new GameOverDialog();
+        gameOverDialog.attach(panel);
+        gameOverDialog.hide();
+        gameOverDialog.setOnJogarDeNovoListener(() -> restart());
     }
 
     private Botao novoBotao(Botao botao) {
-        final JLabel sprite = botao.onCreate(grid, frameWrapper, paneWrapper, this, this, this);
+        final JLabel sprite = botao.onCreate();
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
@@ -189,6 +203,8 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     }
 
     private void inicializaPartida(){
+        gameOverDialog.hide();
+
         somatorioDaMesa = 0;
 
         //cada jogador compra 14 peças
@@ -216,11 +232,14 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             jogador.addPontuacaoPartida(getPontuacaoVencedor(jogador, cpu));
             cpu.addPontuacaoPartida(getPontuacaoPerdedor(jogador, cpu));
 
-        } else if (cpu == getVencedorVitoriaAlternativa(jogador, cpu) || cpu.getPedras().size() == 0){
+            gameOverDialog.show(jogador, getPontuacaoVencedor(jogador, cpu), getPontuacaoPerdedor(jogador, cpu));
+        }
+        else if (cpu == getVencedorVitoriaAlternativa(jogador, cpu) || cpu.getPedras().size() == 0){
 
             cpu.addPontuacaoPartida(getPontuacaoVencedor(cpu, jogador));
             jogador.addPontuacaoPartida(getPontuacaoPerdedor(cpu, jogador));
 
+            gameOverDialog.show(cpu, getPontuacaoVencedor(cpu, jogador), getPontuacaoPerdedor(cpu, jogador));
         }
     }
 
