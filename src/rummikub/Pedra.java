@@ -35,7 +35,7 @@ public class Pedra implements GameObject {
     //essa variável serve para alternar entre as duas variedades de imagens para o coringa
     private static boolean coringaFlip = false;
 
-    private JLabel spriteHolder;
+    protected JLabel spriteHolder;
     private ImageIcon versoSprite;
     private ImageIcon frenteSprite;
 
@@ -50,9 +50,15 @@ public class Pedra implements GameObject {
     public Pedra(String tipo, String cor){
         this.tipo = tipo;
         this.cor = cor;
+        init();
     }
     public Pedra(String tipo){
         this.tipo = tipo;
+        init();
+    }
+
+    private void init(){
+        virada = false;
     }
 
     @Override
@@ -69,8 +75,6 @@ public class Pedra implements GameObject {
         spriteHolder =  new JLabel(versoSprite);
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, versoSprite.getIconWidth(), versoSprite.getIconHeight());
-
-        virada = false;
 
         setupMouseEvents(grid, loc, mov, col, conj, ui);
 
@@ -129,107 +133,127 @@ public class Pedra implements GameObject {
 
     public Conjunto getConjunto(){ return this.conjunto; }
 
+    public void simulateDrag(Point destino, Grid grid, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui){
+        beginDrag(mov);
+
+        if(!Pedra.this.virada) // não pode fazer drag de pedra virada
+            return;
+
+        if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+            return;
+
+        moveToNoSnapping(destino.x, destino.y);
+
+        endDrag(grid, col, conj, ui);
+    }
+
+    protected void beginDrag(MoveToFront mov){
+        if(!this.virada) // não pode fazer drag de pedra virada
+            return;
+
+        if(this.conjunto != null && this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+            return;
+
+        mov.moveToFront(spriteHolder);
+
+        locationBeforeDrag = spriteHolder.getLocation();
+    }
+
+    protected void endDrag(Grid grid, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui){
+        if(!this.virada) // não pode fazer drag de pedra virada
+            return;
+
+        if(this.conjunto != null && this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
+            return;
+
+        final Point position = spriteHolder.getLocation();
+        moveTo(grid, position.x, position.y);
+
+        // simplesmente para fins de debug, printa o estado atual dos conjuntos lógicos pro stdout
+        final Runnable log = () -> {
+            System.out.println();
+            for(Conjunto c : conj.getConjuntos())
+                System.out.println(c + " -> seq? " + (c.isSequencia() ? "s" : "n") + "; grupo? " + (c.isGrupo() ? "s" : "n") + " -> " + c.getPontos() + "pts");
+        };
+
+        final Conjunto oldConjunto = this.conjunto;
+
+        // se remove do conjunto antigo
+        final ArrayList<Conjunto> split = oldConjunto == null ? null : oldConjunto.split(this);
+        if(oldConjunto != null) {
+            conj.removeConjunto(oldConjunto);
+
+            for (Conjunto c : split)
+                if (c.size() > 0)
+                    conj.addConjunto(c);
+        }
+
+        final Runnable rollback = () -> {
+            moveTo(grid, locationBeforeDrag.x, locationBeforeDrag.y);
+            locationBeforeDrag = null;
+
+            if(oldConjunto != null) {
+                // desfaz o split
+                for (Conjunto c : split)
+                    conj.removeConjunto(c);
+                final Conjunto c = new Conjunto(oldConjunto.getPedras());
+                conj.addConjunto(c);
+            }
+
+            log.run();
+        };
+
+        if(col.checkCollision(this, 0) != null){ //se colidiu faz rollback
+            rollback.run();
+            return;
+        }
+
+        final Pedra vizinhoEsquerda = col.checkCollision(this, -grid.getCellSizeInPx());
+        final Pedra vizinhoDireita = col.checkCollision(this, grid.getCellSizeInPx());
+
+        if(vizinhoEsquerda != null && vizinhoDireita != null) { //não pode mover, pois o uniria dois conjuntos distintos
+            rollback.run();
+            return;
+        }
+
+        final Pedra vizinho = vizinhoEsquerda != null ? vizinhoEsquerda : vizinhoDireita;
+
+        if(vizinho != null){
+            if(vizinho.conjunto == null){ // o único caso que o conjunto é nulo é se ele estiver tentando arrastar de volta para a mão
+                rollback.run();
+                return;
+            }
+
+            if(vizinho.conjunto.isFrozen()){ // se o conjunto estiver frozen, não pode ser modificado
+                rollback.run();
+                return;
+            }
+
+            vizinho.conjunto.add(this);
+            vizinho.conjunto.sort(grid);
+        }
+        else {
+            final Conjunto c = new Conjunto(new ArrayList<>());
+            c.add(this);
+            conj.addConjunto(c);
+        }
+
+        ui.onMovimentoExecutado(this);
+
+        log.run();
+    }
+
     private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui){
         spriteHolder.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-
-                if(!Pedra.this.virada) // não pode fazer drag de pedra virada
-                    return;
-
-                if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
-                    return;
-
-                mov.moveToFront(spriteHolder);
-
-                locationBeforeDrag = spriteHolder.getLocation();
+                beginDrag(mov);
             }
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mousePressed(e);
-
-                if(!Pedra.this.virada) // não pode fazer drag de pedra virada
-                    return;
-
-                if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
-                    return;
-
-                final Point position = spriteHolder.getLocation();
-                moveTo(grid, position.x, position.y);
-
-                // simplesmente para fins de debug, printa o estado atual dos conjuntos lógicos pro stdout
-                final Runnable log = () -> {
-                    System.out.println();
-                    for(Conjunto c : conj.getConjuntos())
-                        System.out.println(c + " -> seq? " + (c.isSequencia() ? "s" : "n") + "; grupo? " + (c.isGrupo() ? "s" : "n") + " -> " + c.getPontos() + "pts");
-                };
-
-                final Conjunto oldConjunto = Pedra.this.conjunto;
-
-                // se remove do conjunto antigo
-                final ArrayList<Conjunto> split = oldConjunto == null ? null : oldConjunto.split(Pedra.this);
-                if(oldConjunto != null) {
-                    conj.removeConjunto(oldConjunto);
-
-                    for (Conjunto c : split)
-                        if (c.size() > 0)
-                            conj.addConjunto(c);
-                }
-
-                final Runnable rollback = () -> {
-                    moveTo(grid, locationBeforeDrag.x, locationBeforeDrag.y);
-                    locationBeforeDrag = null;
-
-                    if(oldConjunto != null) {
-                        // desfaz o split
-                        for (Conjunto c : split)
-                            conj.removeConjunto(c);
-                        final Conjunto c = new Conjunto(oldConjunto.getPedras());
-                        conj.addConjunto(c);
-                    }
-
-                    log.run();
-                };
-
-                if(col.checkCollision(Pedra.this, 0) != null){ //se colidiu faz rollback
-                    rollback.run();
-                    return;
-                }
-
-                final Pedra vizinhoEsquerda = col.checkCollision(Pedra.this, -grid.getCellSizeInPx());
-                final Pedra vizinhoDireita = col.checkCollision(Pedra.this, grid.getCellSizeInPx());
-
-                if(vizinhoEsquerda != null && vizinhoDireita != null) { //não pode mover, pois o uniria dois conjuntos distintos
-                    rollback.run();
-                    return;
-                }
-
-                final Pedra vizinho = vizinhoEsquerda != null ? vizinhoEsquerda : vizinhoDireita;
-
-                if(vizinho != null){
-                    if(vizinho.conjunto == null){ // o único caso que o conjunto é nulo é se ele estiver tentando arrastar de volta para a mão
-                        rollback.run();
-                        return;
-                    }
-
-                    if(vizinho.conjunto.isFrozen()){ // se o conjunto estiver frozen, não pode ser modificado
-                        rollback.run();
-                        return;
-                    }
-
-                    vizinho.conjunto.add(Pedra.this);
-                    vizinho.conjunto.sort(grid);
-                }
-                else {
-                    final Conjunto c = new Conjunto(new ArrayList<>());
-                    c.add(Pedra.this);
-                    conj.addConjunto(c);
-                }
-
-                ui.onMovimentoExecutado(Pedra.this);
-
-                log.run();
+                endDrag(grid, col, conj, ui);
             }
         });
 

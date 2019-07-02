@@ -7,8 +7,9 @@ import rummikub.Pedra;
  * suas ações. Principal utilidade é criar abstração que facilite implementar a IA
  */
 public interface GameUIs {
-    void passarAVezButtonPressed();
-    void rummikubButtonPressed();
-    void finalizarJogadaButtonPressed();
-    void onMovimentoExecutado(Pedra pedra);
+    boolean passarAVezButtonPressed();
+    boolean rummikubButtonPressed();
+    boolean finalizarJogadaButtonPressed();
+    boolean onMovimentoExecutado(Pedra pedra);
+    boolean isJogadaInicial();
 }

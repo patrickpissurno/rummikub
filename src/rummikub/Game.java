@@ -134,7 +134,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         timer.stop();
         timer.start();
 
-        turno.onInicioDoTurno(this);
+        turno.onInicioDoTurno(grid, paneWrapper, this, this, this);
     }
 
     private void proximoTurno() {
@@ -385,7 +385,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
     /** Botão de Passar a Vez foi apertado, efetua a compra de pedra para o jogador atual e passa a vez **/
     @Override
-    public void passarAVezButtonPressed() {
+    public boolean passarAVezButtonPressed() {
         if (monteDeCompras.empty())
             finalizaPartida();
         else {
@@ -393,29 +393,33 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             turno.comprarPedra(monteDeCompras.pop(), grid);
             proximoTurno();
         }
+        return true;
     }
 
     /** Botão de Rummikub foi apertado, verifica se pode **/
     @Override
-    public void rummikubButtonPressed() {
-        if (turno.getPedras().isEmpty())
+    public boolean rummikubButtonPressed() {
+        if (turno.getPedras().isEmpty()) {
             finalizaPartida();
+            return true;
+        }
+        return false;
     }
 
     /** Botão de Finalizar Jogada foi apertado, verifica se pode **/
     @Override
-    public void finalizarJogadaButtonPressed() {
+    public boolean finalizarJogadaButtonPressed() {
         if(!validaMesa()) { // a mesa precisa ser válida
             //provavelmente uma mensagem na tela seria mais sutil, mas como não temos
             snapshot.restore(grid, this);
-            return;
+            return false;
         }
         
         if(turnoInicial && pontuaJogada() < 30) // jogada inicial tem que fazer pelo menos 30 pontos
-            return;
+            return false;
 
         if(pontuaJogada() <= 0) // jogador deve descer pelo menos uma peça na mesa para valer a jogada
-            return;
+            return false;
 
         if(turno == jogador)
             jogadorInicial = false;
@@ -423,16 +427,22 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             cpuInicial = false;
 
         proximoTurno();
+
+        return true;
     }
 
     @Override
-    public void onMovimentoExecutado(Pedra pedra) {
+    public boolean onMovimentoExecutado(Pedra pedra) {
         if(pedra.getConjunto() != null) { // somente as pedras que estão na mão tem o conjunto NULL
             turno.removePedra(pedra);
-
-            if(turno instanceof JogadorPessoa)
-                ((JogadorPessoa) turno).sortPedras(grid);
+            turno.sortPedras(grid);
         }
+        return true;
+    }
+
+    @Override
+    public boolean isJogadaInicial() {
+        return turnoInicial;
     }
 
     @Override

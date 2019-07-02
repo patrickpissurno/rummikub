@@ -11,8 +11,10 @@ public class Conjunto {
         isNew = true;
         this.pedras = pedras;
 
-        for(Pedra p : pedras)
-            p.setConjunto(this);
+        if(!(this instanceof ConjuntoVirtual)) {
+            for (Pedra p : pedras)
+                p.setConjunto(this);
+        }
 
         sincronizaOrdenacaoTabuleiro();
     }
@@ -21,8 +23,10 @@ public class Conjunto {
         isNew = true;
         this.pedras = new LinkedList<>(pedras);
 
-        for(Pedra p : pedras)
-            p.setConjunto(this);
+        if(!(this instanceof ConjuntoVirtual)) {
+            for (Pedra p : pedras)
+                p.setConjunto(this);
+        }
 
         sincronizaOrdenacaoTabuleiro();
     }
@@ -117,7 +121,10 @@ public class Conjunto {
 
     public void add(Pedra pedra){
         pedras.add(pedra);
-        pedra.setConjunto(this);
+
+        if(!(this instanceof ConjuntoVirtual))
+            pedra.setConjunto(this);
+
         sincronizaOrdenacaoTabuleiro();
     }
 
@@ -148,7 +155,7 @@ public class Conjunto {
         return 0;
     }
 
-    private void sincronizaOrdenacaoTabuleiro(){
+    protected void sincronizaOrdenacaoTabuleiro(){
         pedras.sort(Comparator.comparingInt(pedra -> pedra.getLocation().x));
     }
 
