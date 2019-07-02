@@ -3,6 +3,7 @@ package test;
 import org.junit.jupiter.api.Test;
 import rummikub.Conjunto;
 import rummikub.Pedra;
+import rummikub.PedraVirtual;
 
 
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ class ConjuntoTest {
     @Test
     void grupoDe4Cores() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -29,9 +30,9 @@ class ConjuntoTest {
     @Test
     void grupoDe3Cores() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -41,10 +42,10 @@ class ConjuntoTest {
     @Test
     void grupoDe4CoresComCoringa() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -54,9 +55,9 @@ class ConjuntoTest {
     @Test
     void grupoDe3CoresComCoringa() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -66,10 +67,10 @@ class ConjuntoTest {
     @Test
     void grupoDe4CoresRepetidas() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -79,9 +80,9 @@ class ConjuntoTest {
     @Test
     void grupoDe3CoresRepetidas() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -91,10 +92,10 @@ class ConjuntoTest {
     @Test
     void grupoDe4CoresRepetidasComCoringa() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -104,9 +105,9 @@ class ConjuntoTest {
     @Test
     void grupoDe3CoresRepetidaComCoringa() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -116,9 +117,9 @@ class ConjuntoTest {
     @Test
     void sequenciaDe3Pedras() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -128,9 +129,9 @@ class ConjuntoTest {
     @Test
     void sequenciaDe3PedrasDesordenado() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -140,9 +141,9 @@ class ConjuntoTest {
     @Test
     void sequenciaDe3PedrasComCoringaNoMeio() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_3, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -152,9 +153,9 @@ class ConjuntoTest {
     @Test
     void sequenciaDe3PedrasComCoringaNaBorda() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -165,8 +166,8 @@ class ConjuntoTest {
     @Test
     void sequenciaDe2Pedras() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -176,8 +177,8 @@ class ConjuntoTest {
     @Test
     void sequenciaDe2PedrasComCoringa() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -187,11 +188,11 @@ class ConjuntoTest {
     @Test
     void split5Pedras() {
         LinkedList<Pedra> pedras = new LinkedList<>();
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
-        pedras.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
 
         Conjunto conjunto = new Conjunto(pedras);
 
@@ -204,15 +205,15 @@ class ConjuntoTest {
     @Test
     void movePedraDaBorda() {
         LinkedList<Pedra> pedras1 = new LinkedList<>();
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras1.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
 
         LinkedList<Pedra> pedras2 = new LinkedList<>();
-        pedras2.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras2.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
+        pedras2.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras2.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
         Conjunto conjunto1 = new Conjunto(pedras1);
 
@@ -226,15 +227,15 @@ class ConjuntoTest {
     @Test
     void movePedraDoMeio() {
         LinkedList<Pedra> pedras1 = new LinkedList<>();
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras1.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
-        pedras1.add(new Pedra(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_ROSA));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERDE));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_VERMELHO));
+        pedras1.add(new PedraVirtual(Pedra.TIPO_NUMERO_2, Pedra.COR_VERMELHO));
 
         LinkedList<Pedra> pedras2 = new LinkedList<>();
-        pedras2.add(new Pedra(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
-        pedras2.add(new Pedra(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
+        pedras2.add(new PedraVirtual(Pedra.TIPO_NUMERO_1, Pedra.COR_AZUL));
+        pedras2.add(new PedraVirtual(Pedra.TIPO_CORINGA, Pedra.COR_AZUL));
 
         Conjunto conjunto1 = new Conjunto(pedras1);
 
