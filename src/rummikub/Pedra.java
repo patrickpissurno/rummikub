@@ -144,7 +144,7 @@ public class Pedra implements GameObject {
                 final Runnable log = () -> {
                     System.out.println();
                     for(Conjunto c : conj.getConjuntos())
-                        System.out.println(c + " -> seq? " + (c.isSequencia() ? "s" : "n") + "; grupo? " + (c.isGrupo() ? "s" : "n"));
+                        System.out.println(c + " -> seq? " + (c.isSequencia() ? "s" : "n") + "; grupo? " + (c.isGrupo() ? "s" : "n") + " -> " + c.getPontos() + "pts");
                 };
 
                 final Conjunto oldConjunto = Pedra.this.conjunto;

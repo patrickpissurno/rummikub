@@ -36,6 +36,8 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
     private int somatorioDaMesa;
 
+    private GameSnapshot snapshot;
+
     public Game(JLayeredPane panel, FrameWrapper frameWrapper){
         this.frameWrapper = frameWrapper;
         this.panel = panel;
@@ -98,6 +100,8 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             turnoInicial = cpuInicial;
             disableButtons();
         }
+
+        snapshot = new GameSnapshot(todasAsPedras, mesa);
 
         turno.onInicioDoTurno(this);
     }
@@ -327,6 +331,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         if (monteDeCompras.empty())
             finalizaPartida();
         else {
+            snapshot.restore(grid, this);
             turno.comprarPedra(monteDeCompras.pop(), grid);
             proximoTurno();
         }
