@@ -248,6 +248,7 @@ public class Pedra implements GameObject {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                System.out.println("Não pode usar peças da mesa na jogada inicial");
                 beginDrag(mov);
             }
             @Override
