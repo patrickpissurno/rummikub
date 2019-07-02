@@ -21,6 +21,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private Botao botaoPassarVez;
     private Botao botaoRummikub;
     private Botao botaoFinalizarJogada;
+    private JLabel tempoRestanteUI;
 
     private List<Pedra> todasAsPedras;
     private List<Conjunto> mesa;
@@ -37,6 +38,9 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     private int somatorioDaMesa;
 
     private GameSnapshot snapshot;
+
+    private Timer timer;
+    private int tempoRestanteJogada;
 
     public Game(JLayeredPane panel, FrameWrapper frameWrapper){
         this.frameWrapper = frameWrapper;
@@ -55,14 +59,18 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         this.cpuInicial = true;
         this.turnoInicial = true;
 
-        inicializaBotoes();
+        timer = new Timer(1000, (e) -> onTimerTick());
+        timer.setRepeats(true);
+        timer.setInitialDelay(1);
+
+        inicializaInterfaceDeUsuario();
 
         inicializaMonteDeCompras();
 
         inicializaPartida();
     }
 
-    private void inicializaBotoes() {
+    private void inicializaInterfaceDeUsuario() {
         botaoPassarVez = novoBotao(new Botao(Botao.TIPO_PASSAR_A_VEZ));
         int botaoPassarVezY = panel.getHeight()/2 - 64 - botaoPassarVez.getHeight();
         botaoPassarVez.moveTo(panel.getWidth() - 8 - botaoPassarVez.getWidth(), botaoPassarVezY);
@@ -77,6 +85,16 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         int botaoFinalizarJogadaY = botaoRummikubY - 8 - botaoFinalizarJogada.getHeight();
         botaoFinalizarJogada.moveTo(panel.getWidth() - 8 - botaoFinalizarJogada.getWidth(), botaoFinalizarJogadaY);
         botaoFinalizarJogada.setClickListener(() -> finalizarJogadaButtonPressed());
+
+        tempoRestanteUI = new JLabel("Tempo restante: 60");
+        tempoRestanteUI.setForeground(Color.BLACK);
+        tempoRestanteUI.setBounds(0,0, botaoFinalizarJogada.getWidth(), 40);
+        tempoRestanteUI.setHorizontalAlignment(SwingConstants.CENTER);
+        int tempoRestanteUIY = botaoFinalizarJogadaY - 8 - tempoRestanteUI.getHeight();
+        tempoRestanteUI.setLocation(panel.getWidth() - 8 - botaoFinalizarJogada.getWidth(), tempoRestanteUIY);
+
+        panel.add(tempoRestanteUI, new Integer(panel.getComponentCount() + 1));
+        panel.setLayer(tempoRestanteUI, JLayeredPane.MODAL_LAYER);
     }
 
     private Botao novoBotao(Botao botao) {
@@ -110,6 +128,11 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             else
                 c.unfreeze();
         }
+
+        // jogador tem 60 segundos para fazer a jogada
+        tempoRestanteJogada = 60;
+        timer.stop();
+        timer.start();
 
         turno.onInicioDoTurno(this);
     }
@@ -183,7 +206,6 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
 
     /**
      * deve ser chamada após a validação de final de partida
-     *
      */
     private void finalizaPartida() {
         // vitoria alternativa || vitoria padrão
@@ -198,7 +220,6 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             jogador.addPontuacaoPartida(getPontuacaoPerdedor(cpu, jogador));
 
         }
-
     }
 
     /** contagem de pontos dos conjuntos da jogada **/
@@ -333,6 +354,31 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         }
 
         return vencedor;
+    }
+
+    private void onTimerTick(){
+        tempoRestanteJogada -= 1;
+        if(tempoRestanteJogada >= 0) {
+            tempoRestanteUI.setText("Tempo restante: " + tempoRestanteJogada);
+            return;
+        }
+
+        tempoRestanteJogada = 0;
+        timer.stop();
+
+        // tempo esgotado, deve comprar 3 pedras e passar o turno
+        snapshot.restore(grid, this);
+
+        for(int i = 0; i < 3; i++) {
+            if (monteDeCompras.empty()) {
+                finalizaPartida();
+                return;
+            }
+            else
+                turno.comprarPedra(monteDeCompras.pop(), grid);
+        }
+
+        proximoTurno();
     }
 
     /** Botão de Passar a Vez foi apertado, efetua a compra de pedra para o jogador atual e passa a vez **/

@@ -41,6 +41,7 @@ public class Pedra implements GameObject {
 
     private String tipo;
     private String cor;
+    private boolean virada;
 
     private Point locationBeforeDrag;
 
@@ -68,6 +69,8 @@ public class Pedra implements GameObject {
         spriteHolder =  new JLabel(versoSprite);
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, versoSprite.getIconWidth(), versoSprite.getIconHeight());
+
+        virada = false;
 
         setupMouseEvents(grid, loc, mov, col, conj, ui);
 
@@ -117,6 +120,7 @@ public class Pedra implements GameObject {
 
     public void desvirar(){
         this.spriteHolder.setIcon(frenteSprite);
+        virada = true;
     }
 
     public void setConjunto(Conjunto conjunto){
@@ -131,6 +135,9 @@ public class Pedra implements GameObject {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
 
+                if(!Pedra.this.virada) // não pode fazer drag de pedra virada
+                    return;
+
                 if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
                     return;
 
@@ -141,6 +148,9 @@ public class Pedra implements GameObject {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mousePressed(e);
+
+                if(!Pedra.this.virada) // não pode fazer drag de pedra virada
+                    return;
 
                 if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
                     return;
@@ -227,6 +237,9 @@ public class Pedra implements GameObject {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+
+                if(!Pedra.this.virada) // não pode fazer drag de pedra virada
+                    return;
 
                 if(Pedra.this.conjunto != null && Pedra.this.conjunto.isFrozen()) // se o conjunto estiver frozen, não pode ser modificado
                     return;
