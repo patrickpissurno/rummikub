@@ -17,7 +17,6 @@ public abstract class Jogador {
     }
 
     public abstract void comprarPedra(Pedra pedra, Grid grid);
-    public abstract List<Pedra> getPedras();
     abstract List<Conjunto> getConjuntosJogada();
     abstract void fimJogada();
 
@@ -27,6 +26,14 @@ public abstract class Jogador {
 
     public void addPedra(Pedra pedra) {
         pedras.add(pedra);
+    }
+
+    public void removePedra(Pedra pedra){
+        pedras.remove(pedra);
+    }
+
+    public List<Pedra> getPedras(){
+        return new ArrayList<>(pedras);
     }
 
     public int getSomatorioMao(){

@@ -4,7 +4,6 @@ import rummikub.interfaces.GameUIs;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class JogadorCPU extends Jogador {
 
@@ -23,13 +22,8 @@ public class JogadorCPU extends Jogador {
     }
 
     @Override
-    public List<Pedra> getPedras() {
-        return pedras;
-    }
-
-    @Override
     public ArrayList<Conjunto> getConjuntosJogada() {
-        return new ArrayList<Conjunto>(conjuntosJogada);
+        return new ArrayList<>(conjuntosJogada);
     }
 
     @Override

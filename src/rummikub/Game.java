@@ -80,7 +80,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     }
 
     private Botao novoBotao(Botao botao) {
-        final JLabel sprite = botao.onCreate(grid, frameWrapper, paneWrapper, this, this);
+        final JLabel sprite = botao.onCreate(grid, frameWrapper, paneWrapper, this, this, this);
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
@@ -101,7 +101,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             disableButtons();
         }
 
-        snapshot = new GameSnapshot(todasAsPedras, mesa);
+        snapshot = new GameSnapshot(todasAsPedras, mesa, turno);
 
         // na jogada inicial os jogadores não podem usar as peças da mesa
         for(Conjunto c : mesa) {
@@ -207,6 +207,8 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
         for(Conjunto c : mesa)
             somatorioAtual += c.getPontos();
 
+        System.out.println("Anterior: " + somatorioDaMesa + ", Atual: " + somatorioAtual);
+
         return somatorioAtual - somatorioDaMesa;
     }
 
@@ -229,7 +231,7 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     }
 
     public Pedra novaPedra(Pedra pedra){
-        final JLabel sprite = pedra.onCreate(grid, frameWrapper, paneWrapper, this, this);
+        final JLabel sprite = pedra.onCreate(grid, frameWrapper, paneWrapper, this, this, this);
 
         //Adiciona o sprite ao frame para que seja renderizado na tela
         panel.add(sprite, new Integer(panel.getComponentCount() + 1));
@@ -373,6 +375,16 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
             cpuInicial = false;
 
         proximoTurno();
+    }
+
+    @Override
+    public void onMovimentoExecutado(Pedra pedra) {
+        if(pedra.getConjunto() != null) { // somente as pedras que estão na mão tem o conjunto NULL
+            turno.removePedra(pedra);
+
+            if(turno instanceof JogadorPessoa)
+                ((JogadorPessoa) turno).sortPedras(grid);
+        }
     }
 
     @Override

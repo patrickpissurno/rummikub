@@ -29,7 +29,7 @@ public class Botao implements GameObject {
     }
 
     @Override
-    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj) {
+    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui) {
         if (tipo.equals(TIPO_PASSAR_A_VEZ)) {
             disabledButton = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez_disabled.png"));
             downButton = new ImageIcon(Utils.getResource("assets/buttons/btn_passar_a_vez/btn_passar_a_vez_down.png"));

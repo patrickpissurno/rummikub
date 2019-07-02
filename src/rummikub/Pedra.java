@@ -55,7 +55,7 @@ public class Pedra implements GameObject {
     }
 
     @Override
-    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj) {
+    public JLabel onCreate(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui) {
         versoSprite = new ImageIcon(Utils.getResource("assets/pedra_verso.png"));
 
         if(tipo.equals(TIPO_CORINGA)) {
@@ -69,7 +69,7 @@ public class Pedra implements GameObject {
         spriteHolder.setLocation(0, 0);
         spriteHolder.setBounds(0, 0, versoSprite.getIconWidth(), versoSprite.getIconHeight());
 
-        setupMouseEvents(grid, loc, mov, col, conj);
+        setupMouseEvents(grid, loc, mov, col, conj, ui);
 
         return spriteHolder;
     }
@@ -123,7 +123,9 @@ public class Pedra implements GameObject {
         this.conjunto = conjunto;
     }
 
-    private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj){
+    public Conjunto getConjunto(){ return this.conjunto; }
+
+    private void setupMouseEvents(Grid grid, WindowLocation loc, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui){
         spriteHolder.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -214,6 +216,8 @@ public class Pedra implements GameObject {
                     c.add(Pedra.this);
                     conj.addConjunto(c);
                 }
+
+                ui.onMovimentoExecutado(Pedra.this);
 
                 log.run();
             }
