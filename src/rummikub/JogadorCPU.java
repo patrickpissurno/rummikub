@@ -44,27 +44,31 @@ public class JogadorCPU extends Jogador {
 
     @Override
     public void onInicioDoTurno(Grid grid, MoveToFront mov, CollisionChecker col, GerenciadorDeConjuntos conj, GameUIs ui) {
-        final Timer t = new Timer(4000, (e) -> {
-            final ConjuntoVirtual melhorJogada = identificaMelhorJogada();
+        final Timer t = new Timer(1000, (e) -> {
+            ConjuntoVirtual melhorJogada = identificaMelhorJogada();
+
             System.out.println("Melhor Jogada IA: " + (melhorJogada == null ? "NULL" : melhorJogada));
 
-            if(melhorJogada != null){
+            while (melhorJogada != null){
+                final Point espacoLivre = identificaEspacoLivreNoTabuleiro(grid, col, melhorJogada.getPedras().size());
+                System.out.println("Espaço livre: " + espacoLivre);
 
-                if(!ui.isJogadaInicial() || melhorJogada.getPontos() >= 30) {
-                    final Point espacoLivre = identificaEspacoLivreNoTabuleiro(grid, col, melhorJogada.getPedras().size());
-                    System.out.println("Espaço livre: " + espacoLivre);
-                    if (espacoLivre != null) {
-                        for (int i = 0; i < melhorJogada.getPedras().size(); i++) {
-                            final Pedra pedra = melhorJogada.getPedras().get(i);
-                            pedra.simulateDrag(new Point(espacoLivre.x + (i * grid.getCellSizeInPx()), espacoLivre.y), grid, mov, col, conj, ui);
-                        }
-
-                        if (ui.finalizarJogadaButtonPressed()) //se conseguiu
-                            return;
+                if (espacoLivre != null) {
+                    for (int i = 0; i < melhorJogada.getPedras().size(); i++) {
+                        final Pedra pedra = melhorJogada.getPedras().get(i);
+                        pedra.simulateDrag(new Point(espacoLivre.x + (i * grid.getCellSizeInPx()), espacoLivre.y), grid, mov, col, conj, ui);
                     }
                 }
 
+                melhorJogada = identificaMelhorJogada();
+                System.out.println("Melhor Jogada IA: " + (melhorJogada == null ? "NULL" : melhorJogada));
             }
+
+            if (ui.rummikubButtonPressed()) //se conseguiu
+                return;
+
+            if (ui.finalizarJogadaButtonPressed()) //se conseguiu
+                return;
 
             ui.passarAVezButtonPressed();
         });
@@ -77,7 +81,7 @@ public class JogadorCPU extends Jogador {
 
         for(int y = 0; y < Main.WINDOW_HEIGHT - grid.getCellSizeInPx(); y += grid.getCellSizeInPx()) {
             for (int x = 0; x < Main.WINDOW_WIDTH - grid.getCellSizeInPx(); x += grid.getCellSizeInPx()){
-                if(y == 0 && (x == 0 || x == grid.getCellSizeInPx()))
+                if((y == 0 && x == 0) || (y == grid.getCellSizeInPx() && x == 0))
                     continue;
 
                 if(x + (grid.getCellSizeInPx() * quantidade) > Main.WINDOW_WIDTH)
@@ -88,7 +92,7 @@ public class JogadorCPU extends Jogador {
                 boolean ocupado = false;
                 for(int i = 0; i < quantidade; i++) {
                     if (col.checkCollision(fake, i * grid.getCellSizeInPx()) != null) {
-                        x += (i + 1) * grid.getCellSizeInPx(); //pula as celulas ja testadas
+                        x += i * grid.getCellSizeInPx(); //pula as celulas ja testadas
                         ocupado = true;
                         break;
                     }
@@ -97,7 +101,7 @@ public class JogadorCPU extends Jogador {
                 if(ocupado)
                     continue;
 
-                return fake.getLocation();
+                return new Point(fake.getLocation().x + grid.getCellSizeInPx(), fake.getLocation().y);
             }
         }
 

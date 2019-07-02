@@ -11,5 +11,4 @@ public interface GameUIs {
     boolean rummikubButtonPressed();
     boolean finalizarJogadaButtonPressed();
     boolean onMovimentoExecutado(Pedra pedra);
-    boolean isJogadaInicial();
 }

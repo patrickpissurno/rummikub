@@ -441,11 +441,6 @@ public class Game implements CollisionChecker, GameUIs, GerenciadorDeConjuntos {
     }
 
     @Override
-    public boolean isJogadaInicial() {
-        return turnoInicial;
-    }
-
-    @Override
     public List<Conjunto> getConjuntos() {
         return new ArrayList<>(this.mesa);
     }
