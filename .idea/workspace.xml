@@ -19,15 +19,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rummikub/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
-              <caret line="421" column="24" lean-forward="true" selection-start-line="421" selection-start-column="24" selection-end-line="421" selection-end-column="24" />
+            <state relative-caret-position="1367">
+              <caret line="421" column="24" selection-start-line="421" selection-start-column="24" selection-end-line="421" selection-end-column="24" />
               <folding>
+                <element signature="e#15372#15373#0" expanded="true" />
                 <element signature="e#15421#15422#0" expanded="true" />
+                <element signature="e#15478#15479#0" expanded="true" />
                 <element signature="e#15510#15511#0" expanded="true" />
+                <element signature="e#15570#15571#0" expanded="true" />
                 <element signature="e#15605#15606#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/GameTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-224">
+              <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/ConjuntoTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="274">
+              <caret line="215" column="9" lean-forward="true" selection-start-line="215" selection-start-column="9" selection-end-line="215" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -36,7 +60,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rummikub/Pedra.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
+            <state relative-caret-position="3270">
               <caret line="237" column="33" selection-start-line="237" selection-start-column="33" selection-end-line="237" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -48,16 +72,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rummikub/GameOverDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="1110">
               <caret line="83" column="46" selection-start-line="83" selection-start-column="46" selection-end-line="83" selection-end-column="46" />
-              <folding>
-                <element signature="e#999#1000#0" expanded="true" />
-                <element signature="e#1052#1053#0" expanded="true" />
-                <element signature="e#1128#1129#0" expanded="true" />
-                <element signature="e#1181#1182#0" expanded="true" />
-                <element signature="e#2851#2852#0" expanded="true" />
-                <element signature="e#2870#2871#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -65,12 +81,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rummikub/Botao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
+            <state relative-caret-position="285">
               <caret line="21" column="66" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2201#2202#0" expanded="true" />
-                <element signature="e#2253#2254#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,9 +129,11 @@
       <find>title</find>
       <find>rumm</find>
       <find>butto</find>
+      <find>PedraVirtualVirtual</find>
     </findStrings>
     <replaceStrings>
       <replace>ranking</replace>
+      <replace>PedraVirtual</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -156,12 +172,14 @@
         <option value="$PROJECT_DIR$/src/rummikub/Botao.java" />
         <option value="$PROJECT_DIR$/src/rummikub/GameOverDialog.java" />
         <option value="$PROJECT_DIR$/src/rummikub/Game.java" />
+        <option value="$PROJECT_DIR$/src/test/ConjuntoTest.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="259" />
     <option name="y" value="22" />
-    <option name="width" value="1920" />
+    <option name="width" value="1571" />
     <option name="height" value="980" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -170,7 +188,27 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="rummikub" type="58d84e3e:PackageViewProjectNode" />
+              <item name="rummikub" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="rummikub" type="58d84e3e:PackageViewProjectNode" />
+              <item name="rummikub" type="616d4139:PackageViewModuleNode" />
+              <item name="rummikub" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="rummikub" type="58d84e3e:PackageViewProjectNode" />
+              <item name="rummikub" type="616d4139:PackageViewModuleNode" />
+              <item name="test" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -204,22 +242,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="rummikub" type="58d84e3e:PackageViewProjectNode" />
-              <item name="rummikub" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="rummikub" type="58d84e3e:PackageViewProjectNode" />
-              <item name="rummikub" type="616d4139:PackageViewModuleNode" />
-              <item name="rummikub" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -264,33 +287,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="rummikub.Main" />
-      <module name="rummikub" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test" type="JUnit" factoryName="JUnit">
-      <module name="rummikub" />
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="PARAMETERS" value="" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JarApplication">
-      <option name="JAR_PATH" value="build.jar" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.test" />
@@ -347,10 +343,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1920" height="980" extended-state="6" />
+    <frame x="259" y="22" width="1571" height="980" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16773163" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20797907" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -410,8 +406,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/ConjuntoTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+        <state relative-caret-position="274">
+          <caret line="215" column="9" lean-forward="true" selection-start-line="215" selection-start-column="9" selection-end-line="215" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -464,8 +460,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/GameTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-681">
-          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+        <state relative-caret-position="-224">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
         </state>
       </provider>
     </entry>
@@ -597,7 +593,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/Pedra.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
+        <state relative-caret-position="3270">
           <caret line="237" column="33" selection-start-line="237" selection-start-column="33" selection-end-line="237" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -607,38 +603,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/Botao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
+        <state relative-caret-position="285">
           <caret line="21" column="66" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2201#2202#0" expanded="true" />
-            <element signature="e#2253#2254#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/GameOverDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
+        <state relative-caret-position="1110">
           <caret line="83" column="46" selection-start-line="83" selection-start-column="46" selection-end-line="83" selection-end-column="46" />
-          <folding>
-            <element signature="e#999#1000#0" expanded="true" />
-            <element signature="e#1052#1053#0" expanded="true" />
-            <element signature="e#1128#1129#0" expanded="true" />
-            <element signature="e#1181#1182#0" expanded="true" />
-            <element signature="e#2851#2852#0" expanded="true" />
-            <element signature="e#2870#2871#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/rummikub/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="421" column="24" lean-forward="true" selection-start-line="421" selection-start-column="24" selection-end-line="421" selection-end-column="24" />
+        <state relative-caret-position="1367">
+          <caret line="421" column="24" selection-start-line="421" selection-start-column="24" selection-end-line="421" selection-end-column="24" />
           <folding>
+            <element signature="e#15372#15373#0" expanded="true" />
             <element signature="e#15421#15422#0" expanded="true" />
+            <element signature="e#15478#15479#0" expanded="true" />
             <element signature="e#15510#15511#0" expanded="true" />
+            <element signature="e#15570#15571#0" expanded="true" />
             <element signature="e#15605#15606#0" expanded="true" />
           </folding>
         </state>
